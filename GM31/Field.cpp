@@ -46,21 +46,17 @@ void Field::Init()
 
 	// テクスチャ読み込み
 	D3DX11CreateShaderResourceViewFromFile(Renderer::GetDevice(),
-		"asset/texture/container2.png",
+		"asset/texture/brick_wall_diffuse.jpg",
 		NULL,
 		NULL,
 		&m_Texture,
 		NULL);
 	assert(m_Texture);
 
-	// Third Person can't move
-
-	// Third Person can move
-	// First Person
 
 
-	Renderer::CreatePixelShader(m_pPixelShader.ReleaseAndGetAddressOf(), "unlitTexturePS.cso");
-	Renderer::CreateVertexShader(m_pVertexShader.ReleaseAndGetAddressOf(), m_pInputLayout.ReleaseAndGetAddressOf(), "unlitTextureVS.cso");
+	Renderer::CreatePixelShader(m_pPixelShader.ReleaseAndGetAddressOf(), "vertexLightingPS.cso");
+	Renderer::CreateVertexShader(m_pVertexShader.ReleaseAndGetAddressOf(), m_pInputLayout.ReleaseAndGetAddressOf(), "vertexLightingVS.cso");
 	
 	m_Scale.x = 10.0f;
 	m_Scale.z = 10.0f;

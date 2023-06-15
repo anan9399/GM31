@@ -19,7 +19,7 @@ void Enemy::Init()
 
 void Enemy::Update()
 {
-	/*if (m_nowRange >= m_range) {
+	if (m_nowRange >= m_range) {
 		moveRight = false;
 	}
 	if (m_nowRange <= -m_range) {
@@ -27,7 +27,7 @@ void Enemy::Update()
 	}
 
 	m_nowRange += moveRight ? speed : -speed;
-	m_Position += moveRight ? D3DXVECTOR3(speed, 0.0f, 0.0f) : D3DXVECTOR3(-speed, 0.0f, 0.0f);*/
+	m_Position += moveRight ? D3DXVECTOR3(speed, 0.0f, 0.0f) : D3DXVECTOR3(-speed, 0.0f, 0.0f);
 
 }
 
