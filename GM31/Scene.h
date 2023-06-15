@@ -11,6 +11,7 @@
 #include"Enemy.h"
 #include"Bullet.h"
 #include"Explosion.h"
+#include"Billboard.h"
 
 class Scene {
 
@@ -27,6 +28,8 @@ public:
 		AddGameObj<Field>(1)->SetPos({ 10.0f,0.0f,10.0f });
 		AddGameObj<Field>(1)->SetPos({ -10.0f,0.0f,-10.0f });
 		AddGameObj<Field>(1)->SetPos({ 10.0f,0.0f,-10.0f });
+
+		AddGameObj<Billboard>(1)->SetPos({ 0.0f,2.0f,5.0f });
 		
 		AddGameObj<Player>(1);
 		

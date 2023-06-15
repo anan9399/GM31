@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Billboard.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Component.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Sprite.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Billboard.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Enemy.cpp" />
