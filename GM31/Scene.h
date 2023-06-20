@@ -38,7 +38,13 @@ public:
 		box->SetScale({ 10.0f,1.0f,2.0f });
 		box->SetPos({ 10.0f,0.5f,-4.0f });
 		
-	
+		box = AddGameObj<Box>(1);
+		box->SetScale({ 2.0f,1.0f,10.0f });
+		box->SetPos({ 10.0f,0.5f,4.0f });
+
+		cylinder = AddGameObj<Cylinder>(1);
+		cylinder->SetScale({ 2.0f,2.0f,2.0f });
+		cylinder->SetPos({ -10.0f,5.0f,5.0f });
 
 		AddGameObj<Enemy>(1)->SetPos({ -3.0f,1.0f,3.0f });
 		AddGameObj<Enemy>(1)->SetPos({ 3.0f,1.0f,3.0f });
