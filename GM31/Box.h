@@ -3,10 +3,9 @@
 #include<memory>
 #include<vector>
 #include"model.h"
-#include"Bullet.h"
 class Scene;
 
-class Player : public GameObject
+class Box : public GameObject
 {
 protected:
 
@@ -16,9 +15,6 @@ protected:
 	Microsoft::WRL::ComPtr<ID3D11VertexShader>m_pVertexShader;
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pPixelShader;
 	MATERIAL material;
-	D3DXVECTOR3 m_velocity{};
-	float m_speed;
-	bool isGround = true;
 public:
 	void Init()override;
 	void Uninit()override;
@@ -28,4 +24,3 @@ public:
 
 
 };
-

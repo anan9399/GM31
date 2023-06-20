@@ -42,6 +42,14 @@ public:
 	void SetPos(D3DXVECTOR3 pos) {
 		m_Position = pos;
 	}
+	/*GameObject* SetPos(D3DXVECTOR3 pos) {
+		m_Position = pos;
+		return this;
+	}*/
+
+	void SetScale(D3DXVECTOR3 scale) {
+		m_Scale = scale;
+	}
 
 	void SetDestory() {
 		m_Destory = true;
@@ -57,6 +65,9 @@ public:
 	}
 	D3DXVECTOR3 GetPos()const {
 		return m_Position;
+	}
+	D3DXVECTOR3 GetScale()const {
+		return m_Scale;
 	}
 
 	D3DXVECTOR3 GetForward()const {

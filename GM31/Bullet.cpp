@@ -36,7 +36,6 @@ void Bullet::Update()
 	}
 
 	auto enemys = Manager::GetScene()->GetGameObjs<Enemy>();
-
 	for (auto& e : enemys) {
 		D3DXVECTOR3 enemyPos = e->GetPos();
 		D3DXVECTOR3 direction = m_Position - enemyPos;
@@ -46,7 +45,46 @@ void Bullet::Update()
 			e->SetDestory();
 			return;
 		}
-	
+	}
+
+
+	// Cyliner
+	auto cylinerColiders = Manager::GetScene()->GetGameObjs<Cylinder>();
+	for (auto& c : cylinerColiders) {
+		D3DXVECTOR3 coliderPos = c->GetPos();
+		D3DXVECTOR3 coliderScale = c->GetScale();
+		D3DXVECTOR3 dir = m_Position - coliderPos;
+		dir.y = 0.0f;
+		float length = D3DXVec3Length(&dir);
+		if (length < coliderScale.x + 1.0f
+			&& m_Position.y < coliderPos.y + coliderScale.y
+			&& m_Position.y >coliderPos.y - coliderScale.y) {
+			SetExplosion();
+			SetDestory();
+			return;
+		}
+	}
+
+
+	// Box
+	auto boxColiders = Manager::GetScene()->GetGameObjs<Box>();
+	for (auto& c : boxColiders) {
+		D3DXVECTOR3 coliderPos = c->GetPos();
+		D3DXVECTOR3 coliderScale = c->GetScale();
+
+		if (m_Position.x > coliderPos.x - coliderScale.x 
+			&& m_Position.x < coliderPos.x + coliderScale.x
+
+			&& m_Position.y >coliderPos.y - coliderScale.y 
+			&& m_Position.y < coliderPos.y + coliderScale.y
+
+			&& m_Position.z >coliderPos.z - coliderScale.z 
+			&& m_Position.z < coliderPos.z + coliderScale.z  )
+		{
+			SetExplosion();
+			SetDestory();
+			return;
+		}
 	}
 }
 

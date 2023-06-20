@@ -22,6 +22,12 @@
     <Filter Include="ソース ファイル\GameObject">
       <UniqueIdentifier>{1edaf8c5-0d3d-46b5-ac6d-41ee600119e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\GameObject\Model">
+      <UniqueIdentifier>{e7b90542-0430-4189-a839-0e2954608b41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\Model">
+      <UniqueIdentifier>{3efde4ef-7261-488b-85ef-03ee33be3f73}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -78,6 +84,12 @@
     <ClInclude Include="Billboard.h">
       <Filter>ヘッダー ファイル\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>ヘッダー ファイル\GameObject\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Cylinder.h">
+      <Filter>ヘッダー ファイル\GameObject\Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -124,6 +136,12 @@
     </ClCompile>
     <ClCompile Include="Billboard.cpp">
       <Filter>ソース ファイル\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>ソース ファイル\GameObject\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Cylinder.cpp">
+      <Filter>ソース ファイル\GameObject\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
