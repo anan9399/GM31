@@ -4,15 +4,18 @@
 #include<wrl.h>
 #include"Scene.h"
 #include"Keyboard.h"
+#include"Game.h"
+#include"Title.h"
 std::shared_ptr<Scene> Manager::m_Scene;
 
 void Manager::Init()
 {
 	Renderer::Init();
 	Keyboard::Init();
-	m_Scene = std::make_shared<Scene>();
-	m_Scene->Init();
 
+	//m_Scene = std::make_shared<Title>();
+	//m_Scene->Init();
+	SetScene<Title>();
 }
 
 void Manager::Uninit()

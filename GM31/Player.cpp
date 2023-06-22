@@ -2,6 +2,7 @@
 #include "Keyboard.h"
 #include"manager.h"
 #include"Scene.h"
+#include"Box.h"
 #include"Cylinder.h"
 void Player::Init()
 {

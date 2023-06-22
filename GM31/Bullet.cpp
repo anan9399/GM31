@@ -4,6 +4,9 @@
 #include"renderer.h"
 #include"Enemy.h"
 #include"Explosion.h"
+#include"Cylinder.h"
+#include"Box.h"
+
 void Bullet::Init()
 {
 

@@ -2,7 +2,7 @@
 #include "renderer.h"
 #include"Scene.h"
 #include"manager.h"
-
+#include"Camera.h"
 void Explosion::Init()
 {
 	VERTEX_3D vertex[4];

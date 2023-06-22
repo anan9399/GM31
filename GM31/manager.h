@@ -1,7 +1,6 @@
 #pragma once
 #include<memory>
-
-class Scene;
+#include"Scene.h"
 
 class Manager
 {
@@ -21,6 +20,15 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
+	
+	template<typename T>
+	static void SetScene() {
+		if (m_Scene) {
+			m_Scene->UnInit();
+			m_Scene.reset();
+		}
 
-
+		m_Scene =std::make_shared<T>();
+		m_Scene->Init();
+	}
 };
