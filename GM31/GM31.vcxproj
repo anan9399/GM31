@@ -150,6 +150,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="Field.h" />
+    <ClInclude Include="FullScreen.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Keyboard.h" />
@@ -157,12 +158,14 @@
     <ClInclude Include="manager.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="MyTimer.h" />
+    <ClInclude Include="Over.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="polygon2D.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Title.h" />
+    <ClInclude Include="TitleLog.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Billboard.cpp" />
@@ -179,11 +182,13 @@
     <ClCompile Include="manager.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="MyTimer.cpp" />
+    <ClCompile Include="Over.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="polygon2D.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Title.cpp" />
+    <ClCompile Include="TitleLog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="common.hlsl">

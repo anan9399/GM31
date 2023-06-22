@@ -8,6 +8,7 @@
 class Scene {
 
 protected:
+	// TODO use smart pointer may be safer
 	std::list<GameObject*> m_GameObjs[3];
 
 public:
@@ -43,6 +44,8 @@ public:
 	//);
 
 	};
+
+
 	virtual void Draw()
 	{
 		for(int i = 0;i < 3; i++){

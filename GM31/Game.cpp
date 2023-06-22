@@ -13,6 +13,9 @@
 #include"Billboard.h"
 #include"Cylinder.h"
 #include"Box.h"
+#include"Keyboard.h"
+#include"Over.h"
+
 
 void Game::Init()
 {
@@ -54,4 +57,11 @@ void Game::UnInit()
 void Game::Update()
 {
 	Scene::Update();
+
+	if (Keyboard::GetKeyTrigger(VK_RETURN)) {
+		for (int i = 0; i < 3; i++) {
+			m_GameObjs[i].clear();
+		}
+		Manager::SetScene<Over>();
+	}
 }

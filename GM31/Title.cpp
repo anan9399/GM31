@@ -3,9 +3,10 @@
 #include"Keyboard.h"
 #include"manager.h"
 #include "Game.h"
+#include"TitleLog.h"
 void Title::Init()
 {
-	AddGameObj<polygon2D>(2);
+	AddGameObj<TitleLog>(2);
 }
 
 void Title::UnInit()
