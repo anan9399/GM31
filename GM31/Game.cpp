@@ -15,7 +15,8 @@
 #include"Box.h"
 #include"Keyboard.h"
 #include"Over.h"
-
+#include"Score.h"
+#include"Finish.h"
 
 void Game::Init()
 {
@@ -37,17 +38,27 @@ void Game::Init()
 
 	cylinder = AddGameObj<Cylinder>(1);
 	cylinder->SetScale({ 2.0f,2.0f,2.0f });
-	cylinder->SetPos({ -13.0f,8.0f,5.0f });
+	cylinder->SetPos({ -13.0f,4.5f,4.0f });
+
+	box = AddGameObj<Box>(1);
+	box->SetScale({ 10.0f,1.0f,2.0f });
+	box->SetPos({ -13.0f,4.0f,8.0f });
+	
+	box = AddGameObj<Box>(1);
+	box->SetScale({ 3.0f,1.0f,10.0f });
+	box->SetPos({ -30.0f,6.0f,12.0f });
 
 	AddGameObj<Enemy>(1)->SetPos({ -3.0f,1.0f,3.0f });
 	AddGameObj<Enemy>(1)->SetPos({ 3.0f,1.0f,3.0f });
+	AddGameObj<Enemy>(1)->SetPos({ 6.0f,1.0f,5.0f });
+
 	// TODO: seperate the billboard to a new render query
 	//		 need a layer for effect
 	//AddGameObj<Billboard>(1)->SetPos({ 3.0f,2.0f,5.0f });
 
-	AddGameObj<polygon2D>(2);
+	
 
-
+	score = AddGameObj<Score>(2)->GetCount();
 }
 
 void Game::UnInit()
@@ -58,10 +69,10 @@ void Game::Update()
 {
 	Scene::Update();
 
-	if (Keyboard::GetKeyTrigger(VK_RETURN)) {
+	if (*score >= 15) {
 		for (int i = 0; i < 3; i++) {
 			m_GameObjs[i].clear();
 		}
-		Manager::SetScene<Over>();
+		Manager::SetScene<Finish>();
 	}
 }

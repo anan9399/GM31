@@ -6,6 +6,7 @@
 #include"Explosion.h"
 #include"Cylinder.h"
 #include"Box.h"
+#include"Score.h"
 
 void Bullet::Init()
 {
@@ -46,6 +47,7 @@ void Bullet::Update()
 			SetExplosion();
 			SetDestory();
 			e->SetDestory();
+			Manager::GetScene()->GetGameObj<Score>()->AddCount(5);
 			return;
 		}
 	}

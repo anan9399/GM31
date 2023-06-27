@@ -100,7 +100,9 @@ void Player::Update()
 		if(	m_Position.x >coliderPos.x - coliderScale.x - 0.5f - 0.8f
 			&& m_Position.x < coliderPos.x + coliderScale.x + 0.5f + 0.8f
 			&& m_Position.z >coliderPos.z - coliderScale.z - 0.5f - 0.8f
-			&& m_Position.z < coliderPos.z + coliderScale.z + 0.5f + 0.8f)
+			&& m_Position.z < coliderPos.z + coliderScale.z + 0.5f + 0.8f
+			&& m_Position.y > coliderPos.y - coliderScale.y + 0.5f + 0.8f
+			)
 		{ 
 			if (m_Position.y < coliderPos.y + coliderScale.y * 2.0f - 0.5f) 
 			{

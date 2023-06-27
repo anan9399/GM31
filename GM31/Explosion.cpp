@@ -54,10 +54,6 @@ void Explosion::Init()
 		NULL);
 	assert(m_Texture);
 
-	// Third Person can't move
-
-	// Third Person can move
-	// First Person
 
 
 	Renderer::CreatePixelShader(m_pPixelShader.ReleaseAndGetAddressOf(), "vertexLightingPS.cso");
@@ -166,8 +162,6 @@ void Explosion::Draw()
 
 	Renderer::GetDeviceContext()->VSSetShader(m_pVertexShader.Get(), nullptr, 0u);
 	Renderer::GetDeviceContext()->IASetInputLayout(m_pInputLayout.Get());
-
-
 	Renderer::GetDeviceContext()->PSSetShader(m_pPixelShader.Get(), nullptr, 0u);
 
 
