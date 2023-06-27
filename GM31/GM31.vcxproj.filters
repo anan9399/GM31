@@ -197,6 +197,9 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>ソース ファイル\GameObject\2D</Filter>
     </ClCompile>
+    <ClCompile Include="FinishLog.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="common.hlsl">
