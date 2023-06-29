@@ -4,6 +4,8 @@
 #include"Scene.h"
 #include"Box.h"
 #include"Cylinder.h"
+#include"audio.h"
+
 void Player::Init()
 {
 	m_model = std::make_unique<Model>();
@@ -16,11 +18,16 @@ void Player::Init()
 
 	m_speed = 0.1f;
 	//material.Diffuse = { 0.6f,0.6f,0.8f,1.0f };
+	m_shotSE = AddComponent<Audio>();
+	m_shotSE->Load("asset\\audio\\solid.wav");
 }
 
 void Player::Uninit()
 {
 	m_model->Unload();
+	m_model.release();
+	
+	GameObject::Uninit();
 }
 
 void Player::Update()
@@ -53,6 +60,9 @@ void Player::Update()
 		auto bullet = scene->AddGameObj<Bullet>(1);
 		bullet->SetPos(m_Position);
 		bullet->SetVelocity(GetForward()*0.1f);
+
+
+		m_shotSE->Play(false);
 	}
 
 	if (isGround && Keyboard::GetKeyTrigger(VK_SPACE)) {

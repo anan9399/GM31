@@ -123,6 +123,9 @@
     <ClInclude Include="Explosion.h">
       <Filter>ヘッダー ファイル\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="audio.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -197,8 +200,13 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>ソース ファイル\GameObject\2D</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="FinishLog.cpp">
       <Filter>ソース ファイル\Scene</Filter>
+=======
+    <ClCompile Include="audio.cpp">
+      <Filter>ソース ファイル</Filter>
+>>>>>>> develop
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

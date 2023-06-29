@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="audio.h" />
     <ClInclude Include="Billboard.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Bullet.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="TitleLog.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="audio.cpp" />
     <ClCompile Include="Billboard.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Bullet.cpp" />

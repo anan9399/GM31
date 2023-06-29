@@ -6,13 +6,14 @@
 #include"Keyboard.h"
 #include"Game.h"
 #include"Title.h"
+#include"audio.h"
 std::shared_ptr<Scene> Manager::m_Scene;
 
 void Manager::Init()
 {
 	Renderer::Init();
 	Keyboard::Init();
-
+	Audio::InitMaster();
 	//m_Scene = std::make_shared<Title>();
 	//m_Scene->Init();
 	SetScene<Title>();
@@ -20,9 +21,10 @@ void Manager::Init()
 
 void Manager::Uninit()
 {
+	m_Scene->UnInit();
 	Keyboard::Uninit();
 	Renderer::Uninit();
-	m_Scene->UnInit();
+	Audio::UninitMaster();
 	//m_Scene.reset();
 }
 
