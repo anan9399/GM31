@@ -17,12 +17,15 @@ public:
 	void Update()override;
 	void Draw()override;
 	void AddCount(int count) {
+		
 		m_count += count;
 	}
 	int* GetCount() {
+		
 		return &m_count;
 	}
 private:
+	//bool m_dirty = true;
 	int m_count =0;
 };
 

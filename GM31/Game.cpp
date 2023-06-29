@@ -17,6 +17,15 @@
 #include"Over.h"
 #include"Score.h"
 #include"Finish.h"
+#include"audio.h"
+#include<random>
+
+
+
+std::mt19937 rng({ std::random_device{}() });
+std::uniform_int_distribution<int> xdist(-20.0f, 20.0f);
+std::uniform_int_distribution<int> ydist(0.0f, 1.0f);
+std::uniform_int_distribution<int> zdist(-20.0f, 20.0f);
 
 void Game::Init()
 {
@@ -40,29 +49,26 @@ void Game::Init()
 	cylinder->SetScale({ 2.0f,2.0f,2.0f });
 	cylinder->SetPos({ -13.0f,4.5f,4.0f });
 
-	box = AddGameObj<Box>(1);
-	box->SetScale({ 10.0f,1.0f,2.0f });
-	box->SetPos({ -13.0f,4.0f,8.0f });
+	for (int i = 0; i < 30; i++) {
+		box = AddGameObj<Box>(1);
+		box->SetScale({ 2.0f,1.0f,2.0f });
+		box->SetPos({ xdist(rng) + 1.0f,0.5f,zdist(rng)+1.0f });
+	}
 	
-	box = AddGameObj<Box>(1);
-	box->SetScale({ 3.0f,1.0f,10.0f });
-	box->SetPos({ -30.0f,6.0f,12.0f });
 
-	AddGameObj<Enemy>(1)->SetPos({ -3.0f,1.0f,3.0f });
-	AddGameObj<Enemy>(1)->SetPos({ 3.0f,1.0f,3.0f });
-	AddGameObj<Enemy>(1)->SetPos({ 6.0f,1.0f,5.0f });
+	AddGameObj<Enemy>(1)->SetPos({ -3.0f,2.5f,3.0f });
+	AddGameObj<Enemy>(1)->SetPos({ 3.0f,2.5f,3.0f });
+	AddGameObj<Enemy>(1)->SetPos({ 6.0f,2.5f,5.0f });
 
 	// TODO: seperate the billboard to a new render query
 	//		 need a layer for effect
 	//AddGameObj<Billboard>(1)->SetPos({ 3.0f,2.0f,5.0f });
 
-	
+	m_bgm = AddGameObj<GameObject>(0)->AddComponent<Audio>();
+	m_bgm->Load("asset\\audio\\bell.wav");
+	m_bgm->Play(true);
 
 	score = AddGameObj<Score>(2)->GetCount();
-}
-
-void Game::UnInit()
-{
 }
 
 void Game::Update()
@@ -71,8 +77,12 @@ void Game::Update()
 
 	if (*score >= 15) {
 		for (int i = 0; i < 3; i++) {
+				for (auto& g : m_GameObjs[i]) {
+				g->Uninit();
+			}
 			m_GameObjs[i].clear();
 		}
 		Manager::SetScene<Finish>();
 	}
 }
+

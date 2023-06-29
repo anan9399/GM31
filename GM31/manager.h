@@ -1,7 +1,7 @@
 #pragma once
 #include<memory>
 #include"Scene.h"
-
+#include"audio.h"
 class Manager
 {
 private:

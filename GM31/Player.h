@@ -5,6 +5,7 @@
 #include"model.h"
 #include"Bullet.h"
 class Scene;
+class Audio;
 
 class Player : public GameObject
 {
@@ -19,6 +20,8 @@ protected:
 	D3DXVECTOR3 m_velocity{};
 	float m_speed;
 	bool isGround = true;
+
+	Audio* m_shotSE;
 public:
 	void Init()override;
 	void Uninit()override;
