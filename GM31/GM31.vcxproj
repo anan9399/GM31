@@ -181,7 +181,6 @@
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="Finish.cpp" />
-    <ClCompile Include="FinishLog.cpp" />
     <ClCompile Include="FinishLog.h" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Keyboard.cpp" />
