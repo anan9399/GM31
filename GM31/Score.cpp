@@ -4,6 +4,8 @@
 #include"Sprite.h"
 #include"manager.h"
 #include"Finish.h"
+#include"MyTimer.h"
+
 void Score::Init()
 {
 
@@ -89,12 +91,12 @@ void Score::Draw()
 	// プリミティブトポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 	
-	int count = m_count;
+	int count = m_timer.Peek();
 	
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
-		//頂点座標の算出
-		float vx = 100.0 - i * 30.0f;
+		//頂点座標の算+出
+		float vx = 120.0 - i * 30.0f;
 		float vy = 30.0f;
 		float height = 50.0f;
 		float width = 50.0f;

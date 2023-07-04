@@ -75,7 +75,7 @@ void Game::Update()
 {
 	Scene::Update();
 
-	if (*score >= 15) {
+	if (*score >= 1000) {
 		for (int i = 0; i < 3; i++) {
 				for (auto& g : m_GameObjs[i]) {
 				g->Uninit();

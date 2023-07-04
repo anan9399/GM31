@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-
+#include "MyTimer.h"
 
 class Score : public GameObject
 {
@@ -27,5 +27,6 @@ public:
 private:
 	//bool m_dirty = true;
 	int m_count =0;
+	MyTimer m_timer{};
 };
 
