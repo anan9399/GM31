@@ -7,7 +7,8 @@
 #include"Game.h"
 #include"Title.h"
 #include"audio.h"
-std::shared_ptr<Scene> Manager::m_Scene;
+std::shared_ptr<Scene> Manager::m_scene;
+std::shared_ptr<Scene> Manager::m_nextScene;
 
 void Manager::Init()
 {
@@ -21,7 +22,7 @@ void Manager::Init()
 
 void Manager::Uninit()
 {
-	m_Scene->UnInit();
+	m_scene->UnInit();
 	Keyboard::Uninit();
 	Renderer::Uninit();
 	Audio::UninitMaster();
@@ -31,14 +32,25 @@ void Manager::Uninit()
 void Manager::Update()
 {
 	Keyboard::Update();
-	m_Scene->Update();
+
+	if (m_nextScene) {
+		if (m_scene) {
+			m_scene->UnInit();
+			m_scene.reset();
+		}
+
+		m_scene = std::move(m_nextScene);
+		m_scene->Init();
+	}
+
+	m_scene->Update();
 }
 
 void Manager::Draw()
 {
 	Renderer::Begin();
 	
-	m_Scene->Draw();
+	m_scene->Draw();
 
 	Renderer::End();
 }

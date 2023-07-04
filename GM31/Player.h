@@ -20,7 +20,7 @@ protected:
 	D3DXVECTOR3 m_velocity{};
 	float m_speed;
 	bool isGround = true;
-
+	bool superBullet = false;
 	Audio* m_shotSE;
 public:
 	void Init()override;

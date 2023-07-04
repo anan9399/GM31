@@ -5,6 +5,8 @@
 #include"Box.h"
 #include"Cylinder.h"
 #include"audio.h"
+#include"SuperBullet.h"
+#include"Billboard.h"
 
 void Player::Init()
 {
@@ -57,11 +59,17 @@ void Player::Update()
 
 	//std::shared_ptr<Scene> scene = Manager::GetScene();
 	if (Keyboard::GetKeyTrigger('F')) {	
-		auto bullet = scene->AddGameObj<Bullet>(1);
-		bullet->SetPos(m_Position);
-		bullet->SetVelocity(GetForward()*0.1f);
-
-
+		if (superBullet) {
+			auto bullet = scene->AddGameObj<SuperBullet>(1);
+			bullet->SetPos(m_Position);
+			bullet->SetVelocity(GetForward() * 0.1f);
+		}
+		else {
+			auto bullet = scene->AddGameObj<Bullet>(1);
+			bullet->SetPos(m_Position);
+			bullet->SetVelocity(GetForward() * 0.1f);
+		}
+		
 		m_shotSE->Play(false);
 	}
 
@@ -126,6 +134,26 @@ void Player::Update()
 			break;
 		}
 
+	}
+
+	// Item
+	auto item = scene->GetGameObjs<Billboard>();
+	for (auto& c : item) {
+		D3DXVECTOR3 itemPos = c->GetPos();
+		D3DXVECTOR3 itemScale = c->GetScale();
+
+		D3DXVECTOR3 dir = m_Position - itemPos;
+		dir.y = 0.0f;
+		float length = D3DXVec3Length(&dir);
+
+		if (length < itemScale.x + 1.0f
+			&& m_Position.y < itemPos.y + itemScale.y
+			&& m_Position.y >itemPos.y - itemScale.y
+			) {
+			superBullet = true;
+			c->SetDestory();
+			break;
+		}
 	}
 
 	if (m_Position.y <= groundHeight && m_velocity.y < 0.0f) {

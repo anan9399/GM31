@@ -6,7 +6,8 @@ class Manager
 {
 private:
 	Manager() {};
-	static std::shared_ptr<Scene> m_Scene;
+	static std::shared_ptr<Scene> m_scene;
+	static std::shared_ptr<Scene> m_nextScene;
 
 public:
 	static Manager& GetInstance() {
@@ -14,7 +15,7 @@ public:
 		return instance;
 	}
 	static std::shared_ptr<Scene> GetScene() {
-		return m_Scene;
+		return m_scene;
 	}
 	void Init();
 	void Uninit();
@@ -23,12 +24,8 @@ public:
 	
 	template<typename T>
 	static void SetScene() {
-		if (m_Scene) {
-			m_Scene->UnInit();
-			m_Scene.reset();
-		}
-
-		m_Scene =std::make_shared<T>();
-		m_Scene->Init();
+		m_nextScene =std::make_shared<T>();
 	}
+
+
 };

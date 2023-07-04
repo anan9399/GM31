@@ -11,7 +11,16 @@ struct VERTEX_3D
     D3DXVECTOR2 TexCoord;
 };
 
-
+// í∏ì_ç\ë¢ëÃ
+struct VERTEX_3D_N
+{
+	D3DXVECTOR3 Position;
+	D3DXVECTOR3 Normal;
+	D3DXVECTOR3 Tangent;
+	D3DXVECTOR3 Binormal;
+	D3DXVECTOR4 Diffuse;
+	D3DXVECTOR2 TexCoord;
+};
 
 struct MATERIAL
 {
@@ -85,6 +94,7 @@ public:
 
 
 	static void CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName);
+	static void CreateVertexShaderN(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName);
 	static void CreatePixelShader(ID3D11PixelShader** PixelShader, const char* FileName);
 
 
