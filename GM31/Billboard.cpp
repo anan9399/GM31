@@ -3,6 +3,8 @@
 #include"Scene.h"
 #include"manager.h"
 #include "Camera.h"
+#include"BindableBase.h"
+
 void Billboard::Init()
 {
 	VERTEX_3D vertex[4];
@@ -43,25 +45,18 @@ void Billboard::Init()
 	sd.pSysMem = vertex;
 
 	Renderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
+	
+	
+	binds.emplace_back(std::make_shared<Texture>("asset/texture/kolu.png", 0));
 
+	auto pvs = std::make_shared<VertexShader>("unlitTextureVS.cso");
+	auto fsize = pvs->Getfsize();
+	auto buffer = pvs->GetBuffer();
+	binds.push_back(std::move(pvs));
+	
+	binds.emplace_back(std::make_shared<InputLayout>(layout, buffer, fsize));
+	binds.emplace_back(std::make_shared<PixelShader>("unlitTexturePS.cso"));
 
-	// テクスチャ読み込み
-	D3DX11CreateShaderResourceViewFromFile(Renderer::GetDevice(),
-		"asset/texture/kolu.png",
-		NULL,
-		NULL,
-		&m_Texture,
-		NULL);
-	assert(m_Texture);
-
-	// Third Person can't move
-
-	// Third Person can move
-	// First Person
-
-
-	Renderer::CreatePixelShader(m_pPixelShader.ReleaseAndGetAddressOf(), "unlitTexturePS.cso");
-	Renderer::CreateVertexShader(m_pVertexShader.ReleaseAndGetAddressOf(), m_pInputLayout.ReleaseAndGetAddressOf(), "unlitTextureVS.cso");
 
 }
 
@@ -69,9 +64,7 @@ void Billboard::Init()
 void Billboard::Uninit()
 {
 
-
-
-	//ここにシェーダーオブジェクトの解放を追加
+	binds.clear();
 
 }
 
@@ -117,21 +110,12 @@ void Billboard::Draw()
 	material.TextureEnable = true;
 	Renderer::SetMaterial(material);
 
-	// テクスチャ設定
-	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, m_Texture.GetAddressOf());
+	for (auto b : binds) {
+		b->Bind();
+	}
 
 	// プリミティブトポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
-
-
-
-	Renderer::GetDeviceContext()->VSSetShader(m_pVertexShader.Get(), nullptr, 0u);
-	Renderer::GetDeviceContext()->IASetInputLayout(m_pInputLayout.Get());
-
-
-	Renderer::GetDeviceContext()->PSSetShader(m_pPixelShader.Get(), nullptr, 0u);
-
 
 	// ポリゴン描画
 	Renderer::GetDeviceContext()->Draw(4, 0);

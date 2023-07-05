@@ -1,6 +1,6 @@
 #include "Field.h"
 #include "renderer.h"
-
+#include"BindableBase.h"
 
 void Field::Init()
 {
@@ -97,30 +97,21 @@ void Field::Init()
 		Renderer::GetDeviceContext()->Unmap(m_IndexBuffer.Get(), 0);
 	}
 
-	// テクスチャ読み込み
-	D3DX11CreateShaderResourceViewFromFile(Renderer::GetDevice(),
-		"asset/texture/brick_wall_diffuse.jpg",
-		NULL,
-		NULL,
-		&m_Texture,
-		NULL);
-	assert(m_Texture);
 
-	// テクスチャ読み込み
-	D3DX11CreateShaderResourceViewFromFile(Renderer::GetDevice(),
-		"asset/texture/brick_wall_normal.jpg",
-		NULL,
-		NULL,
-		&m_TextureNormal,
-		NULL);
-	assert(m_TextureNormal);
+	binds.emplace_back(std::make_shared<Texture>("asset/texture/brick_wall_diffuse.jpg", 0));
+	binds.emplace_back(std::make_shared<Texture>("asset/texture/brick_wall_normal.jpg", 1));
+
+	auto pvs = std::make_shared<VertexShader>("normalMappingVS.cso");
+	auto fsize = pvs->Getfsize();
+	auto buffer = pvs->GetBuffer();
+	binds.push_back(std::move(pvs));
+
+	binds.emplace_back(std::make_shared<InputLayout>(layoutN,buffer,fsize));
+	binds.emplace_back(std::make_shared<PixelShader>("normalMappingPS.cso"));
 
 	m_Position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_Scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-
-	Renderer::CreateVertexShaderN(&m_pVertexShader, &m_pInputLayout, "normalMappingVS.cso");
-	Renderer::CreatePixelShader(&m_pPixelShader, "normalMappingPS.cso");
 
 }
 
@@ -128,9 +119,7 @@ void Field::Init()
 void Field::Uninit()
 {
 
-
-
-	//ここにシェーダーオブジェクトの解放を追加
+	binds.clear();
 
 }
 
@@ -175,17 +164,20 @@ void Field::Draw()
 
 
 	// テクスチャ設定
-	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, m_Texture.GetAddressOf());
-	Renderer::GetDeviceContext()->PSSetShaderResources(1, 1, m_TextureNormal.GetAddressOf());
+	//Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, m_Texture.GetAddressOf());
+	for (auto b : binds) {
+		b->Bind();
+	}
+	//Renderer::GetDeviceContext()->PSSetShaderResources(1, 1, m_TextureNormal.GetAddressOf());
 	// プリミティブトポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 
 
 
-	Renderer::GetDeviceContext()->VSSetShader(m_pVertexShader.Get(), nullptr, 0u);
-	Renderer::GetDeviceContext()->IASetInputLayout(m_pInputLayout.Get());
-	Renderer::GetDeviceContext()->PSSetShader(m_pPixelShader.Get(), nullptr, 0u);
+	//Renderer::GetDeviceContext()->VSSetShader(m_pVertexShader.Get(), nullptr, 0u);
+	//Renderer::GetDeviceContext()->IASetInputLayout(m_pInputLayout.Get());
+	//Renderer::GetDeviceContext()->PSSetShader(m_pPixelShader.Get(), nullptr, 0u);
 
 
 	// ポリゴン描画

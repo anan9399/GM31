@@ -7,7 +7,7 @@
 #include"Cylinder.h"
 #include"Box.h"
 #include"Score.h"
-
+#include"BindableBase.h"
 void Bullet::Init()
 {
 
@@ -16,8 +16,13 @@ void Bullet::Init()
 
 	m_Scale = D3DXVECTOR3(0.3f, 0.3f, 0.3f);
 	m_velocity = D3DXVECTOR3(0.0f, 0.0f, 0.1f);
-	Renderer::CreatePixelShader(m_pPixelShader.ReleaseAndGetAddressOf(), "vertexLightingPS.cso");
-	Renderer::CreateVertexShader(m_pVertexShader.ReleaseAndGetAddressOf(), m_pInputLayout.ReleaseAndGetAddressOf(), "vertexLightingVS.cso");
+
+	auto pvs = std::make_shared<VertexShader>("vertexLightingVS.cso");
+	auto fsize = pvs->Getfsize();
+	auto buffer = pvs->GetBuffer();
+	binds.push_back(std::move(pvs));
+	binds.emplace_back(std::make_shared<InputLayout>(layout, buffer, fsize));
+	binds.emplace_back(std::make_shared<PixelShader>("vertexLightingPS.cso"));
 
 	m_Position = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	m_life = 0.0f;
@@ -106,10 +111,10 @@ void Bullet::Draw()
 	m_world = m_mScale * m_mRot * m_mTrans;
 	Renderer::SetWorldMatrix(&m_world);
 
+	for (auto b : binds) {
+		b->Bind();
+	}
 
-	Renderer::GetDeviceContext()->VSSetShader(m_pVertexShader.Get(), nullptr, 0u);
-	Renderer::GetDeviceContext()->IASetInputLayout(m_pInputLayout.Get());
-	Renderer::GetDeviceContext()->PSSetShader(m_pPixelShader.Get(), nullptr, 0u);
 
 	m_Model->Draw();
 

@@ -2,15 +2,18 @@
 #include "renderer.h"
 #include "MyTimer.h"
 #include"Sprite.h"
-
+#include"BindableBase.h"
 
 void polygon2D::Init()
 {
 	
+	auto pvs = std::make_shared<VertexShader>("unlitTextureVS.cso");
+	auto fsize = pvs->Getfsize();
+	auto buffer = pvs->GetBuffer();
+	binds.push_back(std::move(pvs));
 
-	Renderer::CreatePixelShader(m_pPixelShader.ReleaseAndGetAddressOf(), "unlitTexturePS.cso");
-	Renderer::CreateVertexShader(m_pVertexShader.ReleaseAndGetAddressOf(), m_pInputLayout.ReleaseAndGetAddressOf(), "unlitTextureVS.cso");
-	
+	binds.emplace_back(std::make_shared<InputLayout>(layout, buffer, fsize));
+	binds.emplace_back(std::make_shared<PixelShader>("unlitTexturePS.cso"));
 
 	AddComponent<Sprite>()->Init("asset\\texture\\field004.jpg",m_Position,300.0f,300.0f);
 	m_Position = D3DXVECTOR3(300.0f, 300.0f, 0.0f);
@@ -39,11 +42,9 @@ void polygon2D::Draw()
 	Renderer::SetWorldViewProjection2D();
 
 	//ここにシェーダー関連の描画準備を追加
-	Renderer::GetDeviceContext()->VSSetShader(m_pVertexShader.Get(), nullptr, 0u);
-	Renderer::GetDeviceContext()->IASetInputLayout(m_pInputLayout.Get());
-	Renderer::GetDeviceContext()->PSSetShader(m_pPixelShader.Get(), nullptr, 0u);
-
-
+	for (auto b : binds) {
+		b->Bind();
+	}
 
 
 	GameObject::Draw();

@@ -4,6 +4,8 @@
 #include"Component.h"
 #include<vector>
 #include<list>
+#include<memory>
+#include"Bindable.h"
 
 class GameObject 
 {
@@ -11,6 +13,8 @@ protected:
 	D3DXVECTOR3 m_Position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	D3DXVECTOR3 m_Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	D3DXVECTOR3 m_Scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+
+	std::vector<std::shared_ptr<Bindable>> binds;
 
 	std::vector<Component*> m_Component;
 	bool m_Destory = false;
