@@ -181,7 +181,7 @@ void Renderer::Init()
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.MaxAnisotropy = 4;
+	samplerDesc.MaxAnisotropy = D3D11_REQ_MAXANISOTROPY;
 	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
 
 	ID3D11SamplerState* samplerState{};
@@ -405,6 +405,42 @@ void Renderer::CreateVertexShader( ID3D11VertexShader** VertexShader, ID3D11Inpu
 }
 
 
+void Renderer::CreateVertexShaderN(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName)
+{
+
+	FILE* file;
+	long int fsize;
+
+	file = fopen(FileName, "rb");
+	assert(file);
+
+	fsize = _filelength(_fileno(file));
+	unsigned char* buffer = new unsigned char[fsize];
+	fread(buffer, fsize, 1, file);
+	fclose(file);
+
+	m_Device->CreateVertexShader(buffer, fsize, NULL, VertexShader);
+
+
+	D3D11_INPUT_ELEMENT_DESC layout[] =
+	{
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0,      0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT,    0,  4 * 3, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TANGENT",  0, DXGI_FORMAT_R32G32B32_FLOAT,    0,  4 * 6, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "BINORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0,  4 * 9, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "COLOR",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 4 * 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,       0, 4 * 16, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+	};
+	UINT numElements = ARRAYSIZE(layout);
+
+	m_Device->CreateInputLayout(layout,
+		numElements,
+		buffer,
+		fsize,
+		VertexLayout);
+
+	delete[] buffer;
+}
 
 void Renderer::CreatePixelShader( ID3D11PixelShader** PixelShader, const char* FileName )
 {

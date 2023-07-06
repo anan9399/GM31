@@ -2,11 +2,17 @@
 #include "renderer.h"
 #include "MyTimer.h"
 #include"Sprite.h"
+#include"BindableBase.h"
 
 void TitleLog::Init()
 {
-	Renderer::CreatePixelShader(m_pPixelShader.ReleaseAndGetAddressOf(), "unlitTexturePS.cso");
-	Renderer::CreateVertexShader(m_pVertexShader.ReleaseAndGetAddressOf(), m_pInputLayout.ReleaseAndGetAddressOf(), "unlitTextureVS.cso");
+	auto pvs = std::make_shared<VertexShader>("unlitTextureVS.cso");
+	auto fsize = pvs->Getfsize();
+	auto buffer = pvs->GetBuffer();
+	binds.push_back(std::move(pvs));
+
+	binds.emplace_back(std::make_shared<InputLayout>(layout, buffer, fsize));
+	binds.emplace_back(std::make_shared<PixelShader>("unlitTexturePS.cso"));
 
 
 	AddComponent<Sprite>()->Init("asset\\texture\\title.png", m_Position, SCREEN_HEIGHT, SCREEN_WIDTH);

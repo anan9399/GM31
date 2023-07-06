@@ -1,14 +1,19 @@
 #include "Box.h"
 #include"manager.h"
 #include"Scene.h"
+#include"BindableBase.h"
 
 void Box::Init()
 {
 	m_model = std::make_unique<Model>();
 	m_model->Load("asset\\model\\box\\box.obj");
 
-	Renderer::CreatePixelShader(m_pPixelShader.ReleaseAndGetAddressOf(), "vertexLightingPS.cso");
-	Renderer::CreateVertexShader(m_pVertexShader.ReleaseAndGetAddressOf(), m_pInputLayout.ReleaseAndGetAddressOf(), "vertexLightingVS.cso");
+	auto pvs = std::make_shared<VertexShader>("vertexLightingVS.cso");
+	auto fsize = pvs->Getfsize();
+	auto buffer = pvs->GetBuffer();
+	binds.push_back(std::move(pvs));
+	binds.emplace_back(std::make_shared<InputLayout>(layout, buffer, fsize));
+	binds.emplace_back(std::make_shared<PixelShader>("vertexLightingPS.cso"));
 
 	m_Position = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
@@ -37,9 +42,10 @@ void Box::Draw()
 	Renderer::SetWorldMatrix(&m_world);
 
 
-	Renderer::GetDeviceContext()->VSSetShader(m_pVertexShader.Get(), nullptr, 0u);
-	Renderer::GetDeviceContext()->IASetInputLayout(m_pInputLayout.Get());
-	Renderer::GetDeviceContext()->PSSetShader(m_pPixelShader.Get(), nullptr, 0u);
+	for (auto b : binds) {
+		b->Bind();
+	}
+
 
 	m_model->Draw();
 }

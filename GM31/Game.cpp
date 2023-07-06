@@ -23,9 +23,9 @@
 
 
 std::mt19937 rng({ std::random_device{}() });
-std::uniform_int_distribution<int> xdist(-20.0f, 20.0f);
-std::uniform_int_distribution<int> ydist(0.0f, 1.0f);
-std::uniform_int_distribution<int> zdist(-20.0f, 20.0f);
+std::uniform_int_distribution<int> xdist(-40.0f, 40.0f);
+std::uniform_int_distribution<int> ydist(0.0f, 2.0f);
+std::uniform_int_distribution<int> zdist(-40.0f, 40.0f);
 
 void Game::Init()
 {
@@ -36,20 +36,20 @@ void Game::Init()
 
 	AddGameObj<Player>(1);
 
-	Cylinder* cylinder = AddGameObj<Cylinder>(1);
-	cylinder->SetScale({ 2.0f,2.0f,2.0f });
-	cylinder->SetPos({ -5.0f,0.5f,5.0f });
+	Billboard* b = AddGameObj<Billboard>(1);
+	b->SetScale({ 2.0f,2.0f,2.0f });
+	b->SetPos({ -5.0f,0.5f,5.0f });
 
 	Box* box = AddGameObj<Box>(1);
 	box->SetScale({ 10.0f,1.0f,2.0f });
 	box->SetPos({ 10.0f,0.5f,-4.0f });
 
 
-	cylinder = AddGameObj<Cylinder>(1);
+	Cylinder* cylinder = AddGameObj<Cylinder>(1);
 	cylinder->SetScale({ 2.0f,2.0f,2.0f });
 	cylinder->SetPos({ -13.0f,4.5f,4.0f });
 
-	for (int i = 0; i < 30; i++) {
+	for (int i = 0; i < 20; i++) {
 		box = AddGameObj<Box>(1);
 		box->SetScale({ 2.0f,1.0f,2.0f });
 		box->SetPos({ xdist(rng) + 1.0f,0.5f,zdist(rng)+1.0f });
@@ -75,7 +75,7 @@ void Game::Update()
 {
 	Scene::Update();
 
-	if (*score >= 15) {
+	if (*score >= 1000) {
 		for (int i = 0; i < 3; i++) {
 				for (auto& g : m_GameObjs[i]) {
 				g->Uninit();

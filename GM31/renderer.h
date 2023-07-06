@@ -1,6 +1,6 @@
 #pragma once
-
-
+#include"main.h"
+#include<vector>
 
 
 struct VERTEX_3D
@@ -11,7 +11,16 @@ struct VERTEX_3D
     D3DXVECTOR2 TexCoord;
 };
 
-
+// í∏ì_ç\ë¢ëÃ
+struct VERTEX_3D_N
+{
+	D3DXVECTOR3 Position;
+	D3DXVECTOR3 Normal;
+	D3DXVECTOR3 Tangent;
+	D3DXVECTOR3 Binormal;
+	D3DXVECTOR4 Diffuse;
+	D3DXVECTOR2 TexCoord;
+};
 
 struct MATERIAL
 {
@@ -24,6 +33,24 @@ struct MATERIAL
 	float		Dummy[2];
 };
 
+
+const std::vector<D3D11_INPUT_ELEMENT_DESC> layoutN =
+{
+	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0,      0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT,    0,  4 * 3, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "TANGENT",  0, DXGI_FORMAT_R32G32B32_FLOAT,    0,  4 * 6, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "BINORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0,  4 * 9, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "COLOR",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 4 * 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,       0, 4 * 16, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+};
+
+const std::vector<D3D11_INPUT_ELEMENT_DESC> layout =
+{
+	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 4 * 3, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "COLOR",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 4 * 6, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 4 * 10, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+};
 
 
 struct LIGHT
@@ -85,6 +112,7 @@ public:
 
 
 	static void CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName);
+	static void CreateVertexShaderN(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName);
 	static void CreatePixelShader(ID3D11PixelShader** PixelShader, const char* FileName);
 
 
