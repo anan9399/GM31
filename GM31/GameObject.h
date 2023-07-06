@@ -14,10 +14,11 @@ protected:
 	D3DXVECTOR3 m_Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	D3DXVECTOR3 m_Scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 
-	std::vector<std::shared_ptr<Bindable>> binds;
+	std::vector<std::shared_ptr<Bindable>> m_binds;
 
 	std::vector<Component*> m_Component;
 	bool m_Destory = false;
+
 public:
 	virtual void Init() 
 	{
@@ -118,4 +119,15 @@ public:
 
 		return static_cast<T*>(component);
 	}
+	void BindAll()const noexcept {
+		for (auto& b : m_binds)
+		{
+			b->Bind();
+		}
+	}
+
+	void AddBind(std::shared_ptr<Bindable> bind) noexcept {
+		m_binds.push_back(std::move(bind));
+	}
+
 };

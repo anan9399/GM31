@@ -8,12 +8,12 @@ void Box::Init()
 	m_model = std::make_unique<Model>();
 	m_model->Load("asset\\model\\box\\box.obj");
 
-	auto pvs = std::make_shared<VertexShader>("vertexLightingVS.cso");
+	auto pvs =VertexShader::Resolve("vertexLightingVS.cso");
 	auto fsize = pvs->Getfsize();
 	auto buffer = pvs->GetBuffer();
-	binds.push_back(std::move(pvs));
-	binds.emplace_back(std::make_shared<InputLayout>(layout, buffer, fsize));
-	binds.emplace_back(std::make_shared<PixelShader>("vertexLightingPS.cso"));
+	AddBind(std::move(pvs));
+	AddBind(std::make_shared<InputLayout>(layout,"layout", buffer, fsize));
+	AddBind(PixelShader::Resolve("vertexLightingPS.cso"));
 
 	m_Position = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
@@ -42,7 +42,7 @@ void Box::Draw()
 	Renderer::SetWorldMatrix(&m_world);
 
 
-	for (auto b : binds) {
+	for (auto b : m_binds) {
 		b->Bind();
 	}
 
