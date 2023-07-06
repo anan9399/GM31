@@ -98,16 +98,17 @@ void Field::Init()
 	}
 
 
-	binds.emplace_back(std::make_shared<Texture>("asset/texture/brick_wall_diffuse.jpg", 0));
-	binds.emplace_back(std::make_shared<Texture>("asset/texture/brick_wall_normal.jpg", 1));
+	AddBind(Texture::Resolve("asset/texture/brick_wall_diffuse.jpg", 0));
+	AddBind(Texture::Resolve("asset/texture/brick_wall_normal.jpg", 1));
 
-	auto pvs = std::make_shared<VertexShader>("normalMappingVS.cso");
+	auto pvs = VertexShader::Resolve("normalMappingVS.cso");
+	//auto pvs = std::make_shared<VertexShader>("normalMappingVS.cso");
 	auto fsize = pvs->Getfsize();
 	auto buffer = pvs->GetBuffer();
-	binds.push_back(std::move(pvs));
+	AddBind(std::move(pvs));
 
-	binds.emplace_back(std::make_shared<InputLayout>(layoutN,buffer,fsize));
-	binds.emplace_back(std::make_shared<PixelShader>("normalMappingPS.cso"));
+	AddBind(std::make_shared<InputLayout>(layoutN,"layoutN",buffer, fsize));
+	AddBind(PixelShader::Resolve("normalMappingPS.cso"));
 
 	m_Position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -119,7 +120,7 @@ void Field::Init()
 void Field::Uninit()
 {
 
-	binds.clear();
+	m_binds.clear();
 
 }
 
@@ -164,11 +165,7 @@ void Field::Draw()
 
 
 	// テクスチャ設定
-	//Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, m_Texture.GetAddressOf());
-	for (auto b : binds) {
-		b->Bind();
-	}
-	//Renderer::GetDeviceContext()->PSSetShaderResources(1, 1, m_TextureNormal.GetAddressOf());
+	BindAll();
 	// プリミティブトポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 

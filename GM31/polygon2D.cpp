@@ -10,10 +10,10 @@ void polygon2D::Init()
 	auto pvs = std::make_shared<VertexShader>("unlitTextureVS.cso");
 	auto fsize = pvs->Getfsize();
 	auto buffer = pvs->GetBuffer();
-	binds.push_back(std::move(pvs));
+	m_binds.push_back(std::move(pvs));
 
-	binds.emplace_back(std::make_shared<InputLayout>(layout, buffer, fsize));
-	binds.emplace_back(std::make_shared<PixelShader>("unlitTexturePS.cso"));
+	m_binds.emplace_back(std::make_shared<InputLayout>(layout, "layout", buffer, fsize));
+	m_binds.emplace_back(std::make_shared<PixelShader>("unlitTexturePS.cso"));
 
 	AddComponent<Sprite>()->Init("asset\\texture\\field004.jpg",m_Position,300.0f,300.0f);
 	m_Position = D3DXVECTOR3(300.0f, 300.0f, 0.0f);
@@ -42,7 +42,7 @@ void polygon2D::Draw()
 	Renderer::SetWorldViewProjection2D();
 
 	//ここにシェーダー関連の描画準備を追加
-	for (auto b : binds) {
+	for (auto b : m_binds) {
 		b->Bind();
 	}
 

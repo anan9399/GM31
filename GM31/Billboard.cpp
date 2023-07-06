@@ -46,16 +46,18 @@ void Billboard::Init()
 
 	Renderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
 	
-	
-	binds.emplace_back(std::make_shared<Texture>("asset/texture/kolu.png", 0));
 
-	auto pvs = std::make_shared<VertexShader>("unlitTextureVS.cso");
+
+	
+	AddBind(Texture::Resolve("asset/texture/kolu.png", 0));
+
+	auto pvs = VertexShader::Resolve("unlitTextureVS.cso");
 	auto fsize = pvs->Getfsize();
 	auto buffer = pvs->GetBuffer();
-	binds.push_back(std::move(pvs));
-	
-	binds.emplace_back(std::make_shared<InputLayout>(layout, buffer, fsize));
-	binds.emplace_back(std::make_shared<PixelShader>("unlitTexturePS.cso"));
+	AddBind(std::move(pvs));
+
+	AddBind(std::make_shared<InputLayout>(layout, "layout", buffer, fsize));
+	AddBind(PixelShader::Resolve("unlitTexturePS.cso"));
 
 
 }
@@ -64,7 +66,7 @@ void Billboard::Init()
 void Billboard::Uninit()
 {
 
-	binds.clear();
+	m_binds.clear();
 
 }
 
@@ -110,9 +112,8 @@ void Billboard::Draw()
 	material.TextureEnable = true;
 	Renderer::SetMaterial(material);
 
-	for (auto b : binds) {
-		b->Bind();
-	}
+	BindAll();
+
 
 	// プリミティブトポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);

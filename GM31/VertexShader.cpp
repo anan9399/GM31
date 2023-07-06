@@ -1,8 +1,13 @@
 #include "VertexShader.h"
 #include <typeinfo>
 #include<d3dcompiler.h>
+#include "BindableCodex.h"
+
+
 
 VertexShader::VertexShader(const char* FileName)
+	:
+	m_pass(FileName)
 {
 	FILE* file;
 
@@ -22,4 +27,20 @@ VertexShader::VertexShader(const char* FileName)
 void VertexShader::Bind() noexcept
 {
 	Renderer::GetDeviceContext()->VSSetShader(m_pVertexShader.Get(), nullptr, 0u);
+}
+
+std::shared_ptr<VertexShader> VertexShader::Resolve(const char* FileName)
+{
+	return Codex::Resolve<VertexShader>(FileName);
+}
+
+std::string VertexShader::GenerateUID(const std::string& FileName)
+{
+	using namespace std::string_literals;
+	return typeid(VertexShader).name() + "#"s + FileName;
+}
+
+std::string VertexShader::GetUID() const noexcept
+{
+	return GenerateUID(m_pass);
 }

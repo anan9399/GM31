@@ -9,10 +9,10 @@ void TitleLog::Init()
 	auto pvs = std::make_shared<VertexShader>("unlitTextureVS.cso");
 	auto fsize = pvs->Getfsize();
 	auto buffer = pvs->GetBuffer();
-	binds.push_back(std::move(pvs));
+	m_binds.push_back(std::move(pvs));
 
-	binds.emplace_back(std::make_shared<InputLayout>(layout, buffer, fsize));
-	binds.emplace_back(std::make_shared<PixelShader>("unlitTexturePS.cso"));
+	m_binds.emplace_back(std::make_shared<InputLayout>(layout, "layout",buffer, fsize));
+	m_binds.emplace_back(std::make_shared<PixelShader>("unlitTexturePS.cso"));
 
 
 	AddComponent<Sprite>()->Init("asset\\texture\\title.png", m_Position, SCREEN_HEIGHT, SCREEN_WIDTH);

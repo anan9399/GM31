@@ -13,8 +13,6 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_pInputLayout;
 	Microsoft::WRL::ComPtr<ID3D11VertexShader>m_pVertexShader;
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pPixelShader;
-
-	std::shared_ptr<Texture> m_texture;
 	
 public:
 	void Init() override;

@@ -3,6 +3,7 @@
 #include"Scene.h"
 #include"manager.h"
 #include"Camera.h"
+#include"BindableBase.h"
 void Explosion::Init()
 {
 	VERTEX_3D vertex[4];
@@ -45,19 +46,16 @@ void Explosion::Init()
 	Renderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
 
 
-	// テクスチャ読み込み
-	D3DX11CreateShaderResourceViewFromFile(Renderer::GetDevice(),
-		"asset/texture/explosion2.png",
-		NULL,
-		NULL,
-		&m_Texture,
-		NULL);
-	assert(m_Texture);
 
+	AddBind(Texture::Resolve("asset/texture/explosion2.png", 0));
 
+	auto pvs = VertexShader::Resolve("unlitTextureVS.cso");
+	auto fsize = pvs->Getfsize();
+	auto buffer = pvs->GetBuffer();
+	AddBind(std::move(pvs));
 
-	Renderer::CreatePixelShader(m_pPixelShader.ReleaseAndGetAddressOf(), "vertexLightingPS.cso");
-	Renderer::CreateVertexShader(m_pVertexShader.ReleaseAndGetAddressOf(), m_pInputLayout.ReleaseAndGetAddressOf(), "vertexLightingVS.cso");
+	AddBind(std::make_shared<InputLayout>(layout, "layout", buffer, fsize));
+	AddBind(PixelShader::Resolve("unlitTexturePS.cso"));
 
 }
 
@@ -152,18 +150,12 @@ void Explosion::Draw()
 	Renderer::SetMaterial(material);
 
 	// テクスチャ設定
-	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, m_Texture.GetAddressOf());
+	//Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, m_Texture.GetAddressOf());
 
 	// プリミティブトポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
-
-
-
-	Renderer::GetDeviceContext()->VSSetShader(m_pVertexShader.Get(), nullptr, 0u);
-	Renderer::GetDeviceContext()->IASetInputLayout(m_pInputLayout.Get());
-	Renderer::GetDeviceContext()->PSSetShader(m_pPixelShader.Get(), nullptr, 0u);
-
+	BindAll();
 
 	// ポリゴン描画
 	Renderer::GetDeviceContext()->Draw(4, 0);

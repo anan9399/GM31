@@ -19,7 +19,7 @@
 #include"Finish.h"
 #include"audio.h"
 #include<random>
-
+#include"Sky.h"
 
 
 std::mt19937 rng({ std::random_device{}() });
@@ -32,10 +32,12 @@ void Game::Init()
 
 	AddGameObj<Camera>(0);
 	AddGameObj<Field>(1)->SetPos({ 0.0f,0.0f,0.0f });
+	AddGameObj<Sky>(1);
 
 
 	AddGameObj<Player>(1);
 
+	
 	Billboard* b = AddGameObj<Billboard>(1);
 	b->SetScale({ 2.0f,2.0f,2.0f });
 	b->SetPos({ -5.0f,0.5f,5.0f });
@@ -68,8 +70,7 @@ void Game::Init()
 	m_bgm->Load("asset\\audio\\bell.wav");
 	m_bgm->Play(true);
 
-	score = AddGameObj<Score>(2)->GetCount();
-}
+	score = AddGameObj<Score>(2)->GetCount();}
 
 void Game::Update()
 {

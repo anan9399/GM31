@@ -11,12 +11,12 @@ void Enemy::Init()
 	m_model = std::make_unique<Model>();
 	m_model->Load("asset\\model\\torus.obj");
 
-	auto pvs = std::make_shared<VertexShader>("vertexLightingVS.cso");
+	auto pvs = VertexShader::Resolve("vertexLightingVS.cso");
 	auto fsize = pvs->Getfsize();
 	auto buffer = pvs->GetBuffer();
-	binds.push_back(std::move(pvs));
-	binds.emplace_back(std::make_shared<InputLayout>(layout, buffer, fsize));
-	binds.emplace_back(std::make_shared<PixelShader>("vertexLightingPS.cso"));
+	AddBind(std::move(pvs));
+	AddBind(std::make_shared<InputLayout>(layout, "layout", buffer, fsize));
+	AddBind(PixelShader::Resolve("vertexLightingPS.cso"));
 
 	speed = dx(rngE);
 	//m_Position = D3DXVECTOR3(0.0f, 1.0f, 1.0f);

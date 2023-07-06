@@ -54,21 +54,21 @@ inline bool __cdecl IsCompressed(DXGI_FORMAT fmt)
     }
 }
 
-_Use_decl_annotations_
-inline bool __cdecl IsPalettized(DXGI_FORMAT fmt)
-{
-    switch (fmt)
-    {
-        case DXGI_FORMAT_AI44:
-        case DXGI_FORMAT_IA44:
-        case DXGI_FORMAT_P8:
-        case DXGI_FORMAT_A8P8:
-            return true;
-
-        default:
-            return false;
-    }
-}
+//_Use_decl_annotations_
+//inline bool __cdecl IsPalettized(DXGI_FORMAT fmt)
+//{
+//    switch (fmt)
+//    {
+//        case DXGI_FORMAT_AI44:
+//        case DXGI_FORMAT_IA44:
+//        case DXGI_FORMAT_P8:
+//        case DXGI_FORMAT_A8P8:
+//            return true;
+//
+//        default:
+//            return false;
+//    }
+//}
 
 _Use_decl_annotations_
 inline bool __cdecl IsSRGB(DXGI_FORMAT fmt)
@@ -93,32 +93,32 @@ inline bool __cdecl IsSRGB(DXGI_FORMAT fmt)
 //=====================================================================================
 // Image I/O
 //=====================================================================================
-_Use_decl_annotations_
-inline HRESULT __cdecl SaveToDDSMemory(const Image& image, DWORD flags, Blob& blob)
-{
-    TexMetadata mdata = {};
-    mdata.width = image.width;
-    mdata.height = image.height;
-    mdata.depth = 1;
-    mdata.arraySize = 1;
-    mdata.mipLevels = 1;
-    mdata.format = image.format;
-    mdata.dimension = TEX_DIMENSION_TEXTURE2D;
-
-    return SaveToDDSMemory(&image, 1, mdata, flags, blob);
-}
-
-_Use_decl_annotations_
-inline HRESULT __cdecl SaveToDDSFile(const Image& image, DWORD flags, const wchar_t* szFile)
-{
-    TexMetadata mdata = {};
-    mdata.width = image.width;
-    mdata.height = image.height;
-    mdata.depth = 1;
-    mdata.arraySize = 1;
-    mdata.mipLevels = 1;
-    mdata.format = image.format;
-    mdata.dimension = TEX_DIMENSION_TEXTURE2D;
-
-    return SaveToDDSFile(&image, 1, mdata, flags, szFile);
-}
+//_Use_decl_annotations_
+//inline HRESULT __cdecl SaveToDDSMemory(const Image& image, DWORD flags, Blob& blob)
+//{
+//    TexMetadata mdata = {};
+//    mdata.width = image.width;
+//    mdata.height = image.height;
+//    mdata.depth = 1;
+//    mdata.arraySize = 1;
+//    mdata.mipLevels = 1;
+//    mdata.format = image.format;
+//    mdata.dimension = TEX_DIMENSION_TEXTURE2D;
+//
+//    return SaveToDDSMemory(&image, 1, mdata, flags, blob);
+//}
+//
+//_Use_decl_annotations_
+//inline HRESULT __cdecl SaveToDDSFile(const Image& image, DWORD flags, const wchar_t* szFile)
+//{
+//    TexMetadata mdata = {};
+//    mdata.width = image.width;
+//    mdata.height = image.height;
+//    mdata.depth = 1;
+//    mdata.arraySize = 1;
+//    mdata.mipLevels = 1;
+//    mdata.format = image.format;
+//    mdata.dimension = TEX_DIMENSION_TEXTURE2D;
+//
+//    return SaveToDDSFile(&image, 1, mdata, flags, szFile);
+//}
