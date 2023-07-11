@@ -8,5 +8,6 @@ public:
 	void Update()override;
 private:
 	class Audio* m_se;
+	class Fade* fade;
 };
 

@@ -9,4 +9,5 @@ public:
 private:
 	int* score;
 	class Audio* m_bgm;
+	class Fade* fade;
 };

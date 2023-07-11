@@ -354,7 +354,8 @@ void Renderer::SetProjectionMatrix( D3DXMATRIX* ProjectionMatrix )
 }
 
 
-
+// TODO: reduce the update times
+// maybe map/unmap is better
 void Renderer::SetMaterial( MATERIAL Material )
 {
 	m_DeviceContext->UpdateSubresource( m_MaterialBuffer, 0, NULL, &Material, 0, 0 );

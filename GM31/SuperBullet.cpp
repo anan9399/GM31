@@ -9,7 +9,7 @@
 #include"Score.h"
 #include"Bullet.h"
 #include"Player.h"
-
+#include"BindableBase.h"
 void SuperBullet::Init()
 {
 
@@ -18,8 +18,16 @@ void SuperBullet::Init()
 
 	m_Scale = D3DXVECTOR3(0.3f, 0.3f, 0.3f);
 	m_velocity = D3DXVECTOR3(0.0f, 0.0f, 0.1f);
-	Renderer::CreatePixelShader(m_pPixelShader.ReleaseAndGetAddressOf(), "vertexLightingPS.cso");
-	Renderer::CreateVertexShader(m_pVertexShader.ReleaseAndGetAddressOf(), m_pInputLayout.ReleaseAndGetAddressOf(), "vertexLightingVS.cso");
+	//Renderer::CreatePixelShader(m_pPixelShader.ReleaseAndGetAddressOf(), "vertexLightingPS.cso");
+	//Renderer::CreateVertexShader(m_pVertexShader.ReleaseAndGetAddressOf(), m_pInputLayout.ReleaseAndGetAddressOf(), "vertexLightingVS.cso");
+	
+	
+	auto pvs = VertexShader::Resolve("vertexLightingVS.cso");
+	auto fsize = pvs->Getfsize();
+	auto buffer = pvs->GetBuffer();
+	AddBind(std::move(pvs));
+	AddBind(std::make_shared<InputLayout>(layout, "layout", buffer, fsize));
+	AddBind(PixelShader::Resolve("vertexLightingPS.cso"));
 
 	m_Position = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	m_life = 0.0f;
@@ -126,9 +134,10 @@ void SuperBullet::Draw()
 	Renderer::SetWorldMatrix(&m_world);
 
 
-	Renderer::GetDeviceContext()->VSSetShader(m_pVertexShader.Get(), nullptr, 0u);
-	Renderer::GetDeviceContext()->IASetInputLayout(m_pInputLayout.Get());
-	Renderer::GetDeviceContext()->PSSetShader(m_pPixelShader.Get(), nullptr, 0u);
+	//Renderer::GetDeviceContext()->VSSetShader(m_pVertexShader.Get(), nullptr, 0u);
+	//Renderer::GetDeviceContext()->IASetInputLayout(m_pInputLayout.Get());
+	//Renderer::GetDeviceContext()->PSSetShader(m_pPixelShader.Get(), nullptr, 0u);
+	BindAll();
 
 	m_Model->Draw();
 

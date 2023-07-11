@@ -5,9 +5,9 @@
 #include <unordered_map>
 #include <type_traits>
 
-//  Singleton class
+//  Singleton class Flyweight Pattern
 // TODO make a garbage collection 
-// to loop all the shared_ptr check the useage 
+// loop all the shared_ptr check the useage 
 class Codex
 {
 public:

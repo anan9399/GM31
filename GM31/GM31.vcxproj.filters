@@ -132,9 +132,6 @@
     <ClInclude Include="audio.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SuperBullet.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Surface.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -160,6 +157,15 @@
       <Filter>ヘッダー ファイル\Bindable</Filter>
     </ClInclude>
     <ClInclude Include="Sky.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SuperBullet.h">
+      <Filter>ヘッダー ファイル\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Fade.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingLog.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -239,9 +245,6 @@
     <ClCompile Include="audio.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SuperBullet.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Surface.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -258,6 +261,12 @@
       <Filter>ソース ファイル\Bindable</Filter>
     </ClCompile>
     <ClCompile Include="Sky.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SuperBullet.cpp">
+      <Filter>ソース ファイル\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Fade.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -281,6 +290,9 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="normalMappingVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="SolidColorPS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

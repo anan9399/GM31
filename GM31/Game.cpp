@@ -20,7 +20,7 @@
 #include"audio.h"
 #include<random>
 #include"Sky.h"
-
+#include"Fade.h"
 
 std::mt19937 rng({ std::random_device{}() });
 std::uniform_int_distribution<int> xdist(-40.0f, 40.0f);
@@ -70,15 +70,21 @@ void Game::Init()
 	m_bgm->Load("asset\\audio\\bell.wav");
 	m_bgm->Play(true);
 
-	score = AddGameObj<Score>(2)->GetCount();}
+	score = AddGameObj<Score>(2)->GetCount();
+	fade = AddGameObj<Fade>(2);
+}
+
 
 void Game::Update()
 {
 	Scene::Update();
 
-	if (*score >= 1000) {
+	if (Keyboard::GetKeyTrigger(VK_RETURN)) {
+		fade->FadeOut();	
+	}
+	if (fade->GetFadeFinished()) {
 		for (int i = 0; i < 3; i++) {
-				for (auto& g : m_GameObjs[i]) {
+			for (auto& g : m_GameObjs[i]) {
 				g->Uninit();
 			}
 			m_GameObjs[i].clear();
