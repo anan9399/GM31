@@ -8,6 +8,8 @@
 #include"SuperBullet.h"
 #include"Billboard.h"
 #include"BindableBase.h"
+#include"Shadow.h"
+
 void Player::Init()
 {
 	m_model = std::make_unique<Model>();
@@ -26,6 +28,7 @@ void Player::Init()
 	//material.Diffuse = { 0.6f,0.6f,0.8f,1.0f };
 	m_shotSE = AddComponent<Audio>();
 	m_shotSE->Load("asset\\audio\\solid.wav");
+	m_shaow = AddComponent<Shadow>();
 }
 
 void Player::Uninit()
@@ -38,6 +41,7 @@ void Player::Uninit()
 
 void Player::Update()
 {
+
 	auto scene = Manager::GetScene();
 	D3DXVECTOR3 oldPos = m_Position;
 
@@ -165,6 +169,11 @@ void Player::Update()
 		m_velocity.y = 0.0f;
 		isGround = true;
 	}
+	D3DXVECTOR3 shadowPos = { m_Position.x,groundHeight+0.001f,m_Position.z };
+	m_shaow->SetPos(shadowPos);
+
+
+	GameObject::Update();
 }
 
 void Player::Draw()
@@ -181,4 +190,5 @@ void Player::Draw()
 	BindAll();
 
 	m_model->Draw();
+	GameObject::Draw();
 }

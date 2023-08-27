@@ -12,7 +12,6 @@ void Camera::Init()
 
 	m_Position = D3DXVECTOR3(0.0f, 5.0f, -10.0f);
 	m_Target = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
 }
 
 
@@ -34,7 +33,7 @@ void Camera::Update()
 
 	m_Target = player->GetPos() 
 			+ player->GetRight() * 0.5f 
-			+ D3DXVECTOR3(0.0f, 3.0f, 0.0f);
+			+ D3DXVECTOR3(0.0f, 1.5f, 0.0f);
 	m_Position = m_Target 
 			- player->GetForward() * 6.0f
 			+ D3DXVECTOR3(0.0f, 1.0f, 0.0f);

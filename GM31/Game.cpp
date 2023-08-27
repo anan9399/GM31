@@ -21,7 +21,8 @@
 #include<random>
 #include"Sky.h"
 #include"Fade.h"
-
+#include"SuperBullet.h"
+#include"Shadow.h"
 std::mt19937 rng({ std::random_device{}() });
 std::uniform_int_distribution<int> xdist(-40.0f, 40.0f);
 std::uniform_int_distribution<int> ydist(0.0f, 2.0f);
@@ -29,13 +30,16 @@ std::uniform_int_distribution<int> zdist(-40.0f, 40.0f);
 
 void Game::Init()
 {
+	Bullet::Load();
+	SuperBullet::Load();
+	Enemy::Load();
 
 	AddGameObj<Camera>(0);
 	AddGameObj<Field>(1)->SetPos({ 0.0f,0.0f,0.0f });
 	AddGameObj<Sky>(1);
 
 
-	AddGameObj<Player>(1);
+	
 
 	
 	Billboard* b = AddGameObj<Billboard>(1);
@@ -56,11 +60,13 @@ void Game::Init()
 		box->SetScale({ 2.0f,1.0f,2.0f });
 		box->SetPos({ xdist(rng) + 1.0f,0.5f,zdist(rng)+1.0f });
 	}
-	
+
+	//AddGameObj<Shadow>(1);
+	AddGameObj<Player>(1);
 
 	AddGameObj<Enemy>(1)->SetPos({ -3.0f,2.5f,3.0f });
-	AddGameObj<Enemy>(1)->SetPos({ 3.0f,2.5f,3.0f });
-	AddGameObj<Enemy>(1)->SetPos({ 6.0f,2.5f,5.0f });
+	//AddGameObj<Enemy>(1)->SetPos({ 3.0f,2.5f,3.0f });
+	//AddGameObj<Enemy>(1)->SetPos({ 6.0f,2.5f,5.0f });
 
 	// TODO: seperate the billboard to a new render query
 	//		 need a layer for effect
@@ -74,6 +80,14 @@ void Game::Init()
 	fade = AddGameObj<Fade>(2);
 }
 
+void Game::UnInit()
+{
+	Scene::UnInit();
+
+	Bullet::UnLoad();
+	SuperBullet::UnLoad();
+	Enemy::UnLoad();
+}
 
 void Game::Update()
 {

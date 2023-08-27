@@ -52,6 +52,12 @@
     <Filter Include="ソース ファイル\Scene\Log">
       <UniqueIdentifier>{4a3bcfa6-eddd-4888-85ab-efa1dfd651ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\BehaviorTree">
+      <UniqueIdentifier>{8ca67835-30db-49d3-9c77-b97ac906c9f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\BehaviorTree">
+      <UniqueIdentifier>{8820be9c-5964-4c2e-9ead-307a5bf08e2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -174,6 +180,39 @@
     <ClInclude Include="TitleLog.h">
       <Filter>ヘッダー ファイル\Scene\Log</Filter>
     </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>ヘッダー ファイル\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>ヘッダー ファイル\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="Shadow.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GuardBT.h">
+      <Filter>ヘッダー ファイル\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>ヘッダー ファイル\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Sequence.h">
+      <Filter>ヘッダー ファイル\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>ヘッダー ファイル\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Selector.h">
+      <Filter>ヘッダー ファイル\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckEnermyInFOVRange.h">
+      <Filter>ヘッダー ファイル\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskPatrol.h">
+      <Filter>ヘッダー ファイル\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskGoToTarget.h">
+      <Filter>ヘッダー ファイル\BehaviorTree</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -274,6 +313,27 @@
     </ClCompile>
     <ClCompile Include="TitleLog.cpp">
       <Filter>ソース ファイル\Scene\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBuffer.cpp">
+      <Filter>ソース ファイル\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexBuffer.cpp">
+      <Filter>ソース ファイル\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="Shadow.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GuardBT.cpp">
+      <Filter>ソース ファイル\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>ソース ファイル\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="TaskPatrol.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Selector.cpp">
+      <Filter>ソース ファイル\BehaviorTree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -152,6 +152,7 @@
     <ClInclude Include="Box.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CheckEnermyInFOVRange.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Cylinder.h" />
     <ClInclude Include="Enemy.h" />
@@ -162,6 +163,8 @@
     <ClInclude Include="FullScreen.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GuardBT.h" />
+    <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="InputLayout.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="LoadingLog.h" />
@@ -169,6 +172,7 @@
     <ClInclude Include="manager.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="MyTimer.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="Over.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="Player.h" />
@@ -176,13 +180,20 @@
     <ClInclude Include="renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Score.h" />
+    <ClInclude Include="Selector.h" />
+    <ClInclude Include="Sequence.h" />
+    <ClInclude Include="Shadow.h" />
     <ClInclude Include="Sky.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SuperBullet.h" />
     <ClInclude Include="Surface.h" />
+    <ClInclude Include="TaskGoToTarget.h" />
+    <ClInclude Include="TaskPatrol.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="TitleLog.h" />
+    <ClInclude Include="Tree.h" />
+    <ClInclude Include="VertexBuffer.h" />
     <ClInclude Include="VertexShader.h" />
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +210,8 @@
     <ClCompile Include="Finish.cpp" />
     <ClCompile Include="FinishLog.h" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GuardBT.cpp" />
+    <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="InputLayout.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="main.cpp" />
@@ -211,13 +224,18 @@
     <ClCompile Include="polygon2D.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="Score.cpp" />
+    <ClCompile Include="Selector.cpp" />
+    <ClCompile Include="Shadow.cpp" />
     <ClCompile Include="Sky.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SuperBullet.cpp" />
     <ClCompile Include="Surface.cpp" />
+    <ClCompile Include="TaskPatrol.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="TitleLog.cpp" />
+    <ClCompile Include="Tree.cpp" />
+    <ClCompile Include="VertexBuffer.cpp" />
     <ClCompile Include="VertexShader.cpp" />
   </ItemGroup>
   <ItemGroup>

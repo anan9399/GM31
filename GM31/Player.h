@@ -22,6 +22,7 @@ protected:
 	bool isGround = true;
 	bool superBullet = false;
 	Audio* m_shotSE;
+	class Shadow* m_shaow;
 public:
 	void Init()override;
 	void Uninit()override;

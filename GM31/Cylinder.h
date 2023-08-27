@@ -15,6 +15,7 @@ protected:
 	Microsoft::WRL::ComPtr<ID3D11VertexShader>m_pVertexShader;
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pPixelShader;
 	MATERIAL material;
+	class Shadow* m_shadow;
 public:
 	void Init()override;
 	void Uninit()override;

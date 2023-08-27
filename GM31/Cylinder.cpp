@@ -2,6 +2,7 @@
 #include"manager.h"
 #include"Scene.h"
 #include"BindableBase.h"
+#include"Shadow.h"
 
 void Cylinder::Init()
 {
@@ -18,17 +19,21 @@ void Cylinder::Init()
 
 	m_Position = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
+	m_shadow = AddComponent<Shadow>();
+	m_shadow->SetScale(D3DXVECTOR3(2.0f, 1.0f, 2.0f));
 	//material.Diffuse = { 0.6f,0.6f,0.8f,1.0f };
 }
 
 void Cylinder::Uninit()
 {
 	m_model->Unload();
+	GameObject::Uninit();
 }
 
 void Cylinder::Update()
 {
-
+	m_shadow->SetPos(D3DXVECTOR3(m_Position.x, 0.001f, m_Position.z));
+	GameObject::Update();
 }
 
 void Cylinder::Draw()
@@ -49,4 +54,5 @@ void Cylinder::Draw()
 
 
 	m_model->Draw();
+	GameObject::Draw();
 }
