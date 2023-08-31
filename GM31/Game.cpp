@@ -23,6 +23,7 @@
 #include"Fade.h"
 #include"SuperBullet.h"
 #include"Shadow.h"
+#include"EnemyCoward.h"
 std::mt19937 rng({ std::random_device{}() });
 std::uniform_int_distribution<int> xdist(-40.0f, 40.0f);
 std::uniform_int_distribution<int> ydist(0.0f, 2.0f);
@@ -30,6 +31,8 @@ std::uniform_int_distribution<int> zdist(-40.0f, 40.0f);
 
 void Game::Init()
 {
+
+
 	Bullet::Load();
 	SuperBullet::Load();
 	Enemy::Load();
@@ -44,7 +47,7 @@ void Game::Init()
 	
 	Billboard* b = AddGameObj<Billboard>(1);
 	b->SetScale({ 2.0f,2.0f,2.0f });
-	b->SetPos({ -5.0f,0.5f,5.0f });
+	b->SetPos({ -13.0f,5.0f,4.0f });
 
 	Box* box = AddGameObj<Box>(1);
 	box->SetScale({ 10.0f,1.0f,2.0f });
@@ -53,7 +56,7 @@ void Game::Init()
 
 	Cylinder* cylinder = AddGameObj<Cylinder>(1);
 	cylinder->SetScale({ 2.0f,2.0f,2.0f });
-	cylinder->SetPos({ -13.0f,4.5f,4.0f });
+	cylinder->SetPos({ -13.0f,3.0f,4.0f });
 
 	for (int i = 0; i < 20; i++) {
 		box = AddGameObj<Box>(1);
@@ -64,9 +67,42 @@ void Game::Init()
 	//AddGameObj<Shadow>(1);
 	AddGameObj<Player>(1);
 
-	AddGameObj<Enemy>(1)->SetPos({ -3.0f,2.5f,3.0f });
-	//AddGameObj<Enemy>(1)->SetPos({ 3.0f,2.5f,3.0f });
-	//AddGameObj<Enemy>(1)->SetPos({ 6.0f,2.5f,5.0f });
+
+
+	//AddGameObj<EnemyCoward>(1)->SetPos({ 10.0f, 0.0f, 10.0f });
+
+	auto enemy2 = AddGameObj<Enemy>(1);
+	enemy2->SetPos({-10.0f,1.5f,-8.0f});
+	std::vector<D3DXVECTOR3> waypoints = { 
+		{-10.0f,1.5f,-8.0f},
+		{-20.0f,1.5f,-8.0f},
+		{-20.0f,1.5f,-18.0f},
+		{-10.0f,1.5f,-18.0f},
+	};
+	enemy2->SetWayPoints(waypoints);
+
+
+	enemy2 = AddGameObj<Enemy>(1);
+	enemy2->SetPos({ 10.0f,1.0f,-8.0f });
+	waypoints = { 
+		{ 10.0f,1.0f,-8.0f},
+		{ 20.0f,1.0f,-8.0f},
+		{ 20.0f,1.0f,-18.0f},
+		{ 10.0f,1.0f,-18.0f}, 
+	};
+	enemy2->SetWayPoints(waypoints);
+
+
+	enemy2 = AddGameObj<EnemyCoward>(1);
+	enemy2->SetPos({ 10.0f,1.0f,8.0f });
+	waypoints = {
+		{ 10.0f,1.0f,8.0f},
+		{ 20.0f,1.0f,8.0f},
+		{ 20.0f,1.0f,18.0f},
+		{ 10.0f,1.0f,18.0f},
+	};
+	enemy2->SetWayPoints(waypoints);
+
 
 	// TODO: seperate the billboard to a new render query
 	//		 need a layer for effect
@@ -76,12 +112,15 @@ void Game::Init()
 	m_bgm->Load("asset\\audio\\bell.wav");
 	m_bgm->Play(true);
 
-	score = AddGameObj<Score>(2)->GetCount();
+	m_time = AddGameObj<Score>(2)->GetCount();
+
 	fade = AddGameObj<Fade>(2);
 }
 
 void Game::UnInit()
 {
+	m_time = GetGameObj<Score>()->GetCount();
+
 	Scene::UnInit();
 
 	Bullet::UnLoad();
@@ -93,9 +132,18 @@ void Game::Update()
 {
 	Scene::Update();
 
-	if (Keyboard::GetKeyTrigger(VK_RETURN)) {
-		fade->FadeOut();	
+	if (GetGameObj<Player>() == nullptr && m_finished == false) {
+		fade->FadeOut();
+		m_finished = true;
 	}
+	if (GetGameObj<EnemyCoward>() == nullptr 
+		&& GetGameObj<Enemy>() == nullptr
+		&& m_finished == false
+		) {
+		fade->FadeOut();
+		m_finished = true;
+	}
+
 	if (fade->GetFadeFinished()) {
 		for (int i = 0; i < 3; i++) {
 			for (auto& g : m_GameObjs[i]) {
@@ -103,6 +151,7 @@ void Game::Update()
 			}
 			m_GameObjs[i].clear();
 		}
+		
 		Manager::SetScene<Finish>();
 	}
 }

@@ -7,7 +7,7 @@ namespace BehaviorTree {
 	{
 		if (_waiting)
 		{
-			_waitCounter += 0.01;
+			_waitCounter += 0.03;
 			if (_waitCounter >= _waitTime)
 			{
 
@@ -29,7 +29,7 @@ namespace BehaviorTree {
 			}
 			else {
 				D3DXVec3Normalize(&target, &target);
-				*m_pos += target * 0.03f;
+				*m_pos += target * 0.05f;
 			}
 		}
 

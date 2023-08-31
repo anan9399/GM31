@@ -6,13 +6,13 @@
 #include"Finish.h"
 #include"MyTimer.h"
 
+int Score::m_count;
+
 void Score::Init()
 {
+	m_count = 0;
 
 	VERTEX_3D vertex[4];
-
-	
-
 
 	// 頂点バッファ生成
 	D3D11_BUFFER_DESC bd;
@@ -48,7 +48,7 @@ void Score::Init()
 	//AddComponent<Sprite>()->Init("asset\\texture\\number.png", m_Position, 300.0f, 300.0f);
 	
 	
-	//m_Position = D3DXVECTOR3(300.0f, 300.0f, 0.0f);
+	//m_Position = D3DXVECTOR3(300.0f, 1300.0f, 0.0f);
 
 }
 
@@ -91,18 +91,18 @@ void Score::Draw()
 	// プリミティブトポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 	
-	int count = m_timer.Peek();
+	m_count = m_timer.Peek();
 	
 	for (int i = 0; i < 4; i++)
 	{
 		//頂点座標の算+出
-		float vx = 120.0 - i * 30.0f;
+		float vx = 120.0 - i * 30;
 		float vy = 30.0f;
 		float height = 50.0f;
 		float width = 50.0f;
 
-		int num = count % 10;
-		count /= 10;
+		int num = m_count % 10;
+		m_count /= 10;
 		float x = num % 5 * (1.0f / 5.0f);
 		float y = num / 5 * (1.0f / 5.0f);
 

@@ -44,6 +44,10 @@ public:
 		}
 	};
 	
+
+	virtual void Hurt() {};
+
+
 	void SetPos(D3DXVECTOR3 pos) {
 		m_Position = pos;
 	}
@@ -60,6 +64,8 @@ public:
 		m_Destory = true;
 	}
 
+	
+
 	bool Destory() {
 		if (m_Destory) {
 			Uninit();
@@ -68,6 +74,10 @@ public:
 		}
 		return false;
 	}
+	D3DXVECTOR3* GetPosAdress() {
+		return &m_Position;
+	}
+
 	D3DXVECTOR3 GetPos()const {
 		return m_Position;
 	}
@@ -107,6 +117,18 @@ public:
 		right.y = rot._12;
 		right.z = rot._13;
 		return right;
+	}
+
+
+	void RotateOne() {
+		if (m_Rotation.z <= 3.1415f) {
+			m_Rotation.z += 1.0f/ 3.1415f;
+		}
+		else
+		{
+			m_Rotation.z = 0.0f;
+		}
+		
 	}
 
 

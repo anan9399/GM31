@@ -58,7 +58,7 @@ void Bullet::Update()
 	for (auto& e : enemys) {
 		D3DXVECTOR3 enemyPos = e->GetPos();
 		D3DXVECTOR3 direction = m_Position - enemyPos;
-		if (D3DXVec3Length(&direction)<1.0f) {
+		if (D3DXVec3Length(&direction)<1.5f) {
 			SetExplosion();
 			SetDestory();
 			e->SetDestory();

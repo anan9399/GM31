@@ -9,6 +9,7 @@
 #include"Billboard.h"
 #include"BindableBase.h"
 #include"Shadow.h"
+#include"Explosion.h"
 
 void Player::Init()
 {
@@ -29,10 +30,12 @@ void Player::Init()
 	m_shotSE = AddComponent<Audio>();
 	m_shotSE->Load("asset\\audio\\solid.wav");
 	m_shaow = AddComponent<Shadow>();
+	playerHP = 1;
 }
 
 void Player::Uninit()
 {
+
 	m_model->Unload();
 	m_model.release();
 	
@@ -41,9 +44,15 @@ void Player::Uninit()
 
 void Player::Update()
 {
+	if (m_dead) {
+		SetExplosion();
+		SetDestory();
+		return;
+	}
 
 	auto scene = Manager::GetScene();
 	D3DXVECTOR3 oldPos = m_Position;
+
 
 	if (Keyboard::GetKeyPress('W')) {
 		m_Position += GetForward() * m_speed;
@@ -137,7 +146,7 @@ void Player::Update()
 			}
 			else 
 			{
-				groundHeight = coliderPos.y + coliderScale.y * 2.0;
+				groundHeight = coliderPos.y + coliderScale.y * 2.0f;
 			}
 			break;
 		}
@@ -173,6 +182,8 @@ void Player::Update()
 	m_shaow->SetPos(shadowPos);
 
 
+
+
 	GameObject::Update();
 }
 
@@ -191,4 +202,15 @@ void Player::Draw()
 
 	m_model->Draw();
 	GameObject::Draw();
+}
+
+void Player::Hurt()
+{
+	m_dead = true;
+}
+
+void Player::SetExplosion()
+{
+	auto explosion = Manager::GetScene()->AddGameObj<Explosion>(1);
+	explosion->SetPos(m_Position);
 }

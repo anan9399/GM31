@@ -10,33 +10,30 @@
 
 namespace BehaviorTree {
 
-	class TaskGoToTarget : public Node
+	class CheckEnermyInAttackRange : public Node
 	{
 	public:
-		TaskGoToTarget(D3DXVECTOR3* pos) {
+		CheckEnermyInAttackRange(D3DXVECTOR3* pos) {
 			m_pos = pos;
-	
+
 		}
 
 		NodeState Evaluate()override {
 			auto t = GetData("target");
+			if (t == nullptr)
+			{
+				state = NodeState::FAILURE;
+				return state;
+			}
 			auto targetPos = t->GetPos();
 			auto direction = targetPos - *m_pos;
 			float l = D3DXVec3Length(&direction);
-
-			if (l > 0.03f) {
-				D3DXVec3Normalize(&direction, &direction);
-				
-				*m_pos += direction * 0.05f;
-			
-				if (l > 10.0f) {
-					ClearData("target");
-					state = NodeState::FAILURE;
-					return state;
-				}
+			if (l <= GuardBT::attackRange) {
+				state = NodeState::SUCCESS;
+				return state;
 			}
 
-			state = NodeState::RUNNING;
+			state = NodeState::FAILURE;
 			return state;
 		}
 

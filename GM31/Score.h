@@ -20,13 +20,12 @@ public:
 		
 		m_count += count;
 	}
-	int* GetCount() {
-		
-		return &m_count;
+	int GetCount() {
+		return m_count;
 	}
 private:
 	//bool m_dirty = true;
-	int m_count =0;
+	static int m_count;
 	MyTimer m_timer{};
 };
 

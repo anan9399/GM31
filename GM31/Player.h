@@ -23,11 +23,18 @@ protected:
 	bool superBullet = false;
 	Audio* m_shotSE;
 	class Shadow* m_shaow;
+private:
+
 public:
+	int playerHP;
+	bool m_dead = false;
+
 	void Init()override;
 	void Uninit()override;
 	void Update()override;
 	void Draw()override;
+	void Hurt()override;
+	void SetExplosion();
 
 
 

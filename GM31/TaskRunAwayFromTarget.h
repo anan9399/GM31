@@ -10,12 +10,12 @@
 
 namespace BehaviorTree {
 
-	class TaskGoToTarget : public Node
+	class TaskRunAwayFromTarget : public Node
 	{
 	public:
-		TaskGoToTarget(D3DXVECTOR3* pos) {
+		TaskRunAwayFromTarget(D3DXVECTOR3* pos) {
 			m_pos = pos;
-	
+
 		}
 
 		NodeState Evaluate()override {
@@ -24,12 +24,15 @@ namespace BehaviorTree {
 			auto direction = targetPos - *m_pos;
 			float l = D3DXVec3Length(&direction);
 
-			if (l > 0.03f) {
+			if (l > 0.01f) {
 				D3DXVec3Normalize(&direction, &direction);
-				
-				*m_pos += direction * 0.05f;
-			
-				if (l > 10.0f) {
+				if (m_pos->y <= 0.2f || m_pos->y >= 4.0f) {
+					direction.y = 0.0f;
+				}
+
+				*m_pos -= direction * 0.1f;
+
+				if (l > 30.0f) {
 					ClearData("target");
 					state = NodeState::FAILURE;
 					return state;

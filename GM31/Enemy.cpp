@@ -25,7 +25,7 @@ void Enemy::UnLoad()
 
 void Enemy::Init()
 {
-	guardBT = new BehaviorTree::GuardBT(&m_Position);
+	
 
 	auto pvs = VertexShader::Resolve("vertexLightingVS.cso");
 	auto fsize = pvs->Getfsize();
@@ -34,9 +34,11 @@ void Enemy::Init()
 	AddBind(std::make_shared<InputLayout>(layout, "layout", buffer, fsize));
 	AddBind(PixelShader::Resolve("vertexLightingPS.cso"));
 
-	speed = dx(rngE);
-	//m_Position = D3DXVECTOR3(0.0f, 1.0f, 1.0f);
+	//speed = dx(rngE);
+	//m_Position = D3DXVECTOR3(10.0f, 0.0f, 10.0f);
 	
+	
+
 }
 
 void Enemy::Uninit()
@@ -46,7 +48,13 @@ void Enemy::Uninit()
 
 void Enemy::Update()
 {
-	guardBT->Update();
+	if (m_guardBT == nullptr) {
+		m_guardBT = new BehaviorTree::GuardBT(this, m_waypoints);
+	}
+	else {
+		m_guardBT->Update();
+	}
+	
 	//m_Position = guardBT->GetPos();
 	//auto player = Manager::GetScene()->GetGameObj<Player>();
 	//D3DXVECTOR3 target = player->GetPos() - GetPos();

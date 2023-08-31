@@ -6,7 +6,7 @@
 namespace BehaviorTree
 {
 	class Node;
-	class GuardBT :public Tree
+	class GuardRunBT :public Tree
 	{
 	public:
 		GameObject* m_target;
@@ -15,15 +15,14 @@ namespace BehaviorTree
 		std::vector<D3DXVECTOR3> m_waypoints;
 
 		float speed;
-		static float fovRange;
-		static float attackRange;
+		static float fovRunRange;
 
-		GuardBT(GameObject* target, std::vector<D3DXVECTOR3> &waypoints): Tree()
+		GuardRunBT(GameObject* target, std::vector<D3DXVECTOR3>& waypoints) : Tree()
 		{
 			m_target = target;
 			m_pos = target->GetPosAdress();
 			m_waypoints = waypoints;
-			speed = 2.0f;
+			speed = 4.0f;
 			root = SetupTree();
 		}
 	protected:

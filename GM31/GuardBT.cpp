@@ -1,23 +1,32 @@
 #include"GuardBT.h"
 #include"TaskPatrol.h"
 #include"CheckEnermyInFOVRange.h"
+#include"CheckEnermyInAttackRange.h"
+#include"TaskAttack.h"
 #include"TaskGoToTarget.h"
 #include<memory>
 #include"Selector.h"
 #include"Sequence.h"
 #include<list>
 
-namespace BehaviorTree {
 
+namespace BehaviorTree {
+	float GuardBT::fovRange = 5.0f;
+	float GuardBT::attackRange = 0.3f;
+	
 	Node* GuardBT::SetupTree() noexcept
 	{
-		std::vector<D3DXVECTOR3> waypoints = { {0.0f,0.0f,10.0f},{0.0f,3.0f,10.0f},{10.0f,3.0f,10.0f} };
+		
 		auto root = new Selector(std::list<Node*>{
 			new Sequence(std::list<Node*>{
+				new CheckEnermyInAttackRange(m_pos),
+				new TaskAttack(m_target),
+			}),
+				new Sequence(std::list<Node*>{
 				new CheckEnermyInFOVRange(m_pos),
 				new TaskGoToTarget(m_pos),
 			}),
-			new TaskPatrol(m_pos, waypoints),
+			new TaskPatrol(m_pos, m_waypoints),
 			});
 
 		//auto root = new TaskPatrol(m_pos, waypoints);

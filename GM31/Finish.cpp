@@ -6,6 +6,8 @@
 #include "Game.h"
 #include"FinishLog.h"
 #include"Fade.h"
+#include"Score.h"
+
 void Finish::Init()
 {
 	AddGameObj<FinishLog>(2);

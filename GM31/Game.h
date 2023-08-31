@@ -8,7 +8,9 @@ public:
 	void UnInit()override;
 	void Update()override;
 private:
-	int* score;
+	bool m_finished = false;
+	int m_time;
+	int m_score;
 	class Audio* m_bgm;
 	class Fade* fade;
 };

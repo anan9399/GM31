@@ -2,7 +2,7 @@
 #include"main.h"
 #include<vector>
 #include<memory>
-
+#include"Node.h"
 #include"Scene.h"
 #include"manager.h"
 #include"Player.h"
@@ -19,25 +19,7 @@ namespace BehaviorTree {
 
 		}
 
-		NodeState Evaluate()override {
-			auto t = GetData("target");
-			if (t == nullptr)
-			{
-				auto distance = m_target->GetPos() - *m_pos;
-				float l = D3DXVec3Length(&distance);
-
-				if (l < 4.0f) {
-					parent->parent->SetData("target", m_target);
-					state = NodeState::SUCCESS;
-					return state;
-				}
-				state = NodeState::FAILURE;
-				return state;
-			}
-
-			state = NodeState::SUCCESS;
-			return state;
-		}
+		NodeState Evaluate()override;
 
 	private:
 		D3DXVECTOR3* m_pos;

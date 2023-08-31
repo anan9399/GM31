@@ -58,6 +58,18 @@
     <Filter Include="ヘッダー ファイル\BehaviorTree">
       <UniqueIdentifier>{8820be9c-5964-4c2e-9ead-307a5bf08e2b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\BehaviorTree\Base">
+      <UniqueIdentifier>{57ffb349-9a3d-4e73-a9e7-d955a826ea13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\BehaviorTree\Base">
+      <UniqueIdentifier>{27846f45-b4bc-435a-94d1-5112e2e1e8a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\BehaviorTree\Condition">
+      <UniqueIdentifier>{af12bace-addb-464f-b014-4ffb08ab4646}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\BehaviorTree\Action">
+      <UniqueIdentifier>{d14f2a0d-9fc3-4fc9-aec1-89ef90c6306d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -193,25 +205,40 @@
       <Filter>ヘッダー ファイル\BehaviorTree</Filter>
     </ClInclude>
     <ClInclude Include="Node.h">
-      <Filter>ヘッダー ファイル\BehaviorTree</Filter>
-    </ClInclude>
-    <ClInclude Include="Sequence.h">
-      <Filter>ヘッダー ファイル\BehaviorTree</Filter>
-    </ClInclude>
-    <ClInclude Include="Tree.h">
-      <Filter>ヘッダー ファイル\BehaviorTree</Filter>
+      <Filter>ヘッダー ファイル\BehaviorTree\Base</Filter>
     </ClInclude>
     <ClInclude Include="Selector.h">
-      <Filter>ヘッダー ファイル\BehaviorTree</Filter>
+      <Filter>ヘッダー ファイル\BehaviorTree\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Sequence.h">
+      <Filter>ヘッダー ファイル\BehaviorTree\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>ヘッダー ファイル\BehaviorTree\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckEnermyInAttackRange.h">
+      <Filter>ヘッダー ファイル\BehaviorTree\Condition</Filter>
     </ClInclude>
     <ClInclude Include="CheckEnermyInFOVRange.h">
-      <Filter>ヘッダー ファイル\BehaviorTree</Filter>
+      <Filter>ヘッダー ファイル\BehaviorTree\Condition</Filter>
     </ClInclude>
-    <ClInclude Include="TaskPatrol.h">
-      <Filter>ヘッダー ファイル\BehaviorTree</Filter>
+    <ClInclude Include="TaskAttack.h">
+      <Filter>ヘッダー ファイル\BehaviorTree\Action</Filter>
     </ClInclude>
     <ClInclude Include="TaskGoToTarget.h">
+      <Filter>ヘッダー ファイル\BehaviorTree\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskPatrol.h">
+      <Filter>ヘッダー ファイル\BehaviorTree\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskRunAwayFromTarget.h">
+      <Filter>ヘッダー ファイル\BehaviorTree\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="GuardRunBT.h">
       <Filter>ヘッダー ファイル\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyCoward.h">
+      <Filter>ヘッダー ファイル\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -326,14 +353,23 @@
     <ClCompile Include="GuardBT.cpp">
       <Filter>ソース ファイル\BehaviorTree</Filter>
     </ClCompile>
-    <ClCompile Include="Tree.cpp">
-      <Filter>ソース ファイル\BehaviorTree</Filter>
-    </ClCompile>
     <ClCompile Include="TaskPatrol.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Selector.cpp">
       <Filter>ソース ファイル\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>ソース ファイル\BehaviorTree\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="GuardRunBT.cpp">
+      <Filter>ソース ファイル\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyCoward.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckEnermyInFOVRange.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

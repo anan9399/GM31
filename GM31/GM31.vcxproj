@@ -152,10 +152,12 @@
     <ClInclude Include="Box.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CheckEnermyInAttackRange.h" />
     <ClInclude Include="CheckEnermyInFOVRange.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Cylinder.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyCoward.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="Field.h" />
@@ -164,6 +166,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GuardBT.h" />
+    <ClInclude Include="GuardRunBT.h" />
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="InputLayout.h" />
     <ClInclude Include="Keyboard.h" />
@@ -187,8 +190,10 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SuperBullet.h" />
     <ClInclude Include="Surface.h" />
+    <ClInclude Include="TaskAttack.h" />
     <ClInclude Include="TaskGoToTarget.h" />
     <ClInclude Include="TaskPatrol.h" />
+    <ClInclude Include="TaskRunAwayFromTarget.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="TitleLog.h" />
@@ -202,8 +207,10 @@
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CheckEnermyInFOVRange.cpp" />
     <ClCompile Include="Cylinder.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyCoward.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Field.cpp" />
@@ -211,6 +218,7 @@
     <ClCompile Include="FinishLog.h" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GuardBT.cpp" />
+    <ClCompile Include="GuardRunBT.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="InputLayout.cpp" />
     <ClCompile Include="Keyboard.cpp" />
