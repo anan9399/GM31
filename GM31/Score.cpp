@@ -49,7 +49,7 @@ void Score::Init()
 	
 	
 	//m_Position = D3DXVECTOR3(300.0f, 1300.0f, 0.0f);
-
+	//m_Scale = D3DXVECTOR3(2.0f, 2.0f, 0.0f);
 }
 
 
@@ -91,18 +91,17 @@ void Score::Draw()
 	// プリミティブトポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 	
-	m_count = m_timer.Peek();
-	
+	auto count = m_count;
 	for (int i = 0; i < 4; i++)
 	{
 		//頂点座標の算+出
-		float vx = 120.0 - i * 30;
-		float vy = 30.0f;
-		float height = 50.0f;
-		float width = 50.0f;
+		float vx = m_Position.x + (120.0 - i * 30)* m_Scale.x;
+		float vy = m_Position.y + 30.0f*m_Scale.y;
+		float height = m_Scale.x * 50.0f;
+		float width = m_Scale.y * 50.0f;
 
-		int num = m_count % 10;
-		m_count /= 10;
+		int num = count % 10;
+		count /= 10;
 		float x = num % 5 * (1.0f / 5.0f);
 		float y = num / 5 * (1.0f / 5.0f);
 

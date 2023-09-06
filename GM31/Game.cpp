@@ -24,10 +24,16 @@
 #include"SuperBullet.h"
 #include"Shadow.h"
 #include"EnemyCoward.h"
+#include"TimeCounter.h"
+#include"Failure.h"
+#include"Child.h"
+
 std::mt19937 rng({ std::random_device{}() });
 std::uniform_int_distribution<int> xdist(-40.0f, 40.0f);
 std::uniform_int_distribution<int> ydist(0.0f, 2.0f);
 std::uniform_int_distribution<int> zdist(-40.0f, 40.0f);
+
+int Game::m_time;
 
 void Game::Init()
 {
@@ -36,6 +42,8 @@ void Game::Init()
 	Bullet::Load();
 	SuperBullet::Load();
 	Enemy::Load();
+	EnemyCoward::Load();
+	Child::Load();
 
 	AddGameObj<Camera>(0);
 	AddGameObj<Field>(1)->SetPos({ 0.0f,0.0f,0.0f });
@@ -63,13 +71,12 @@ void Game::Init()
 		box->SetScale({ 2.0f,1.0f,2.0f });
 		box->SetPos({ xdist(rng) + 1.0f,0.5f,zdist(rng)+1.0f });
 	}
-
-	//AddGameObj<Shadow>(1);
-	AddGameObj<Player>(1);
-
+	auto player = AddGameObj<Player>(1);
+	//AddGameObj<Child>(1)->SetParent(player);
 
 
-	//AddGameObj<EnemyCoward>(1)->SetPos({ 10.0f, 0.0f, 10.0f });
+#pragma region Enemies
+	AddGameObj<EnemyCoward>(1)->SetPos({ 10.0f, 0.0f, 10.0f });
 
 	auto enemy2 = AddGameObj<Enemy>(1);
 	enemy2->SetPos({-10.0f,1.5f,-8.0f});
@@ -103,6 +110,7 @@ void Game::Init()
 	};
 	enemy2->SetWayPoints(waypoints);
 
+#pragma endregion
 
 	// TODO: seperate the billboard to a new render query
 	//		 need a layer for effect
@@ -113,19 +121,21 @@ void Game::Init()
 	m_bgm->Play(true);
 
 	m_time = AddGameObj<Score>(2)->GetCount();
+	AddGameObj<TimeCounter>(2)->SetPos({1100.0f,0.0f,0.0f});
 
 	fade = AddGameObj<Fade>(2);
 }
 
 void Game::UnInit()
 {
-	m_time = GetGameObj<Score>()->GetCount();
+	
 
 	Scene::UnInit();
 
 	Bullet::UnLoad();
 	SuperBullet::UnLoad();
 	Enemy::UnLoad();
+	EnemyCoward::UnLoad();
 }
 
 void Game::Update()
@@ -134,7 +144,9 @@ void Game::Update()
 
 	if (GetGameObj<Player>() == nullptr && m_finished == false) {
 		fade->FadeOut();
+		m_time = GetGameObj<TimeCounter>()->GetCount();
 		m_finished = true;
+	
 	}
 	if (GetGameObj<EnemyCoward>() == nullptr 
 		&& GetGameObj<Enemy>() == nullptr
@@ -142,6 +154,8 @@ void Game::Update()
 		) {
 		fade->FadeOut();
 		m_finished = true;
+		m_win = true;
+		m_time = GetGameObj<TimeCounter>()->GetCount();
 	}
 
 	if (fade->GetFadeFinished()) {
@@ -151,8 +165,14 @@ void Game::Update()
 			}
 			m_GameObjs[i].clear();
 		}
+
+		if (m_win) {
+			Manager::SetScene<Finish>();
+		}
+		else {
+			Manager::SetScene<Finish>();
+		}
 		
-		Manager::SetScene<Finish>();
 	}
 }
 

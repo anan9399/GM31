@@ -2,7 +2,8 @@
 #include"GameObject.h"
 #include<memory>
 #include<vector>
-#include"model.h"
+#include"animationModel.h"
+
 #include"Bullet.h"
 class Scene;
 class Audio;
@@ -12,7 +13,7 @@ class Player : public GameObject
 protected:
 
 	D3DXMATRIX m_world, m_scale, m_rot, m_trans;
-	std::unique_ptr<Model> m_model;
+	std::unique_ptr<AnimationModel> m_model;
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_pInputLayout;
 	Microsoft::WRL::ComPtr<ID3D11VertexShader>m_pVertexShader;
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pPixelShader;
@@ -23,6 +24,11 @@ protected:
 	bool superBullet = false;
 	Audio* m_shotSE;
 	class Shadow* m_shaow;
+	D3DMATRIX m_matrix;
+
+
+	int m_time= 0;
+
 private:
 
 public:
@@ -36,6 +42,7 @@ public:
 	void Hurt()override;
 	void SetExplosion();
 
+	D3DMATRIX GetMatrix() { return m_matrix; }
 
 
 };

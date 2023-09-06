@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include<string>
 
 class polygon2D: public GameObject
 {
@@ -12,6 +13,5 @@ public:
 	void Uninit()override;
 	void Update()override;
 	void Draw()override;
-
 };
 

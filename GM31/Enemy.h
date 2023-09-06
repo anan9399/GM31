@@ -22,9 +22,11 @@ public:
 	void Uninit()override;
 	void Update()override;
 	void Draw()override;
+private:
+	static std::unique_ptr<Model> m_model;
 protected:
 	BehaviorTree::Tree* m_guardBT;
-	static std::unique_ptr<Model> m_model;
+
 	std::vector<D3DXVECTOR3> m_waypoints = { {10.0f,0.0f,10.0f},{10.0f,3.0f,10.0f},{20.0f,3.0f,10.0f} };
 
 	float m_range = 5.0f;

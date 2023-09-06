@@ -8,7 +8,7 @@
 #include"Box.h"
 #include"Score.h"
 #include"BindableBase.h"
-
+#include"EnemyCoward.h"
 std::unique_ptr<Model> Bullet::m_model;
 
 void Bullet::Load()
@@ -58,7 +58,21 @@ void Bullet::Update()
 	for (auto& e : enemys) {
 		D3DXVECTOR3 enemyPos = e->GetPos();
 		D3DXVECTOR3 direction = m_Position - enemyPos;
-		if (D3DXVec3Length(&direction)<1.5f) {
+		if (D3DXVec3Length(&direction)<1.8f) {
+			SetExplosion();
+			SetDestory();
+			e->SetDestory();
+			Manager::GetScene()->GetGameObj<Score>()->AddCount(5);
+			return;
+		}
+	}
+
+
+	auto enemysCoward = Manager::GetScene()->GetGameObjs<EnemyCoward>();
+	for (auto& e : enemysCoward) {
+		D3DXVECTOR3 enemyPos = e->GetPos();
+		D3DXVECTOR3 direction = m_Position - enemyPos;
+		if (D3DXVec3Length(&direction) <1.8f) {
 			SetExplosion();
 			SetDestory();
 			e->SetDestory();

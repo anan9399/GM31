@@ -66,6 +66,6 @@ void Camera::Draw()
 	Renderer::SetProjectionMatrix(&projectionMatrix);
 
 
-	//Renderer::SetCameraPosition(m_Position);
+	Renderer::SetCameraPosition(m_Position);
 
 }

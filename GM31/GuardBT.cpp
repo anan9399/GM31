@@ -11,7 +11,7 @@
 
 
 namespace BehaviorTree {
-	float GuardBT::fovRange = 5.0f;
+	float GuardBT::fovRange = 6.0f;
 	float GuardBT::attackRange = 0.3f;
 	
 	Node* GuardBT::SetupTree() noexcept
@@ -29,8 +29,6 @@ namespace BehaviorTree {
 			new TaskPatrol(m_pos, m_waypoints),
 			});
 
-		//auto root = new TaskPatrol(m_pos, waypoints);
-		//Node* root = new Node();
 		return root;
 	}
 }

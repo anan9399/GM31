@@ -121,12 +121,12 @@ public:
 
 
 	void RotateOne() {
-		if (m_Rotation.z <= 3.1415f) {
-			m_Rotation.z += 1.0f/ 3.1415f;
+		if (m_Rotation.y <= 3.1415f) {
+			m_Rotation.y += 1.0f/ 3.1415f;
 		}
 		else
 		{
-			m_Rotation.z = 0.0f;
+			m_Rotation.y = 0.0f;
 		}
 		
 	}

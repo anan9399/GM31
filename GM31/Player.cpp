@@ -11,17 +11,27 @@
 #include"Shadow.h"
 #include"Explosion.h"
 
+
 void Player::Init()
 {
-	m_model = std::make_unique<Model>();
-	m_model->Load("asset\\model\\torus.obj");	
+	/*m_model = std::make_unique<Model>();
+	m_model->Load("asset\\model\\torus.obj");	*/
 
-	auto pvs = VertexShader::Resolve("vertexLightingVS.cso");
+	m_model = std::make_unique<AnimationModel>();
+	m_model->Load("asset\\model\\character.fbx");	
+	m_model->LoadAnimation("asset\\model\\Bot_Idle.fbx","Idle");
+	m_model->LoadAnimation("asset\\model\\Bot_Run.fbx","Run");
+	m_model->LoadAnimation("asset\\model\\Excited.fbx","Excited");
+
+
+	m_Scale = { 0.015f,0.015f,0.015f };
+
+	auto pvs = VertexShader::Resolve("pixelLightingVS.cso");
 	auto fsize = pvs->Getfsize();
 	auto buffer = pvs->GetBuffer();
 	AddBind(std::move(pvs));
 	AddBind(std::make_shared<InputLayout>(layout, "layout", buffer, fsize));
-	AddBind(PixelShader::Resolve("vertexLightingPS.cso"));
+	AddBind(PixelShader::Resolve("pixelLightingPS.cso"));
 
 	m_Position = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
@@ -196,9 +206,13 @@ void Player::Draw()
 	D3DXMatrixRotationYawPitchRoll(&m_rot, m_Rotation.y, m_Rotation.x, m_Rotation.z);
 	D3DXMatrixTranslation(&m_trans, m_Position.x, m_Position.y, m_Position.z);
 	m_world = m_scale * m_rot * m_trans;
+	m_matrix = m_world;
 	Renderer::SetWorldMatrix(&m_world);
 
 	BindAll();
+
+	m_model->Update("Excited", m_time);
+	m_time++;
 
 	m_model->Draw();
 	GameObject::Draw();

@@ -47,7 +47,7 @@ void Explosion::Init()
 
 
 
-	AddBind(Texture::Resolve("asset/texture/explosion2.png", 0));
+	AddBind(Texture::Resolve("asset/texture/explosion3.png", 0));
 
 	auto pvs = VertexShader::Resolve("unlitTextureVS.cso");
 	auto fsize = pvs->Getfsize();
@@ -57,6 +57,8 @@ void Explosion::Init()
 	AddBind(std::make_shared<InputLayout>(layout, "layout", buffer, fsize));
 	AddBind(PixelShader::Resolve("unlitTexturePS.cso"));
 
+	m_Scale = { 1.5f,1.5f,1.5f };
+	//m_Position = { 0.0f,1.0f,0.0f };
 }
 
 
@@ -73,7 +75,7 @@ void Explosion::Uninit()
 void Explosion::Update()
 {
 	m_count++;
-	if (m_count >= 16) {
+	if (m_count >= 56) {
 		SetDestory();
 		return;
 	}
@@ -83,8 +85,8 @@ void Explosion::Update()
 
 void Explosion::Draw()
 {
-	float x = m_count % 4 * (1.0f / 4.0f);
-	float y = m_count / 4 * (1.0f / 4.0f);
+	float x = m_count % 8 * (1.0f / 8.0f);
+	float y = m_count / 8 * (1.0f / 8.0f);
 
 
 
@@ -102,17 +104,17 @@ void Explosion::Draw()
 	vertex[1].Position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);
 	vertex[1].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	vertex[1].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[1].TexCoord = D3DXVECTOR2(x+0.25f, y);
+	vertex[1].TexCoord = D3DXVECTOR2(x+0.125f, y);
 
 	vertex[2].Position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);
 	vertex[2].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	vertex[2].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[2].TexCoord = D3DXVECTOR2(x, y+0.25f);
+	vertex[2].TexCoord = D3DXVECTOR2(x, y+ (1.0f / 8.0f));
 
 	vertex[3].Position = D3DXVECTOR3(1.0f, -1.0f, 0.0f);
 	vertex[3].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	vertex[3].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[3].TexCoord = D3DXVECTOR2(x+0.25f, y+0.25f);
+	vertex[3].TexCoord = D3DXVECTOR2(x+0.125f, y+(1.0f / 8.0f));
 
 	Renderer::GetDeviceContext()->Unmap(m_VertexBuffer.Get(), 0);
 
@@ -133,7 +135,7 @@ void Explosion::Draw()
 	D3DXMATRIX world, scale, rot, trans;
 	D3DXMatrixScaling(&scale, m_Scale.x, m_Scale.y, m_Scale.z);
 	//D3DXMatrixRotationYawPitchRoll(&rot, m_Rotation.y, m_Rotation.x, m_Rotation.z);
-	D3DXMatrixTranslation(&trans, m_Position.x, m_Position.y, m_Position.z);
+	D3DXMatrixTranslation(&trans, m_Position.x, m_Position.y+1.0f, m_Position.z);
 	world = scale * invView * trans;
 	Renderer::SetWorldMatrix(&world);
 

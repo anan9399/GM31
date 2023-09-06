@@ -15,7 +15,7 @@ std::unique_ptr<Model> Enemy::m_model;
 void Enemy::Load()
 {
 	m_model = std::make_unique<Model>();
-	m_model->Load("asset\\model\\torus.obj");
+	m_model->Load("asset\\model\\turtle.obj");
 }
 
 void Enemy::UnLoad()
@@ -25,8 +25,6 @@ void Enemy::UnLoad()
 
 void Enemy::Init()
 {
-	
-
 	auto pvs = VertexShader::Resolve("vertexLightingVS.cso");
 	auto fsize = pvs->Getfsize();
 	auto buffer = pvs->GetBuffer();
