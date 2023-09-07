@@ -335,7 +335,7 @@ void AnimationModel::Update(const char *AnimationName, int Frame)
 	UpdateBoneMatrix(m_AiScene->mRootNode, rootMatrix);
 
 
-	//頂点変換（CPUスキニング）
+	//頂点変換（CPUスキニング）->GPU 
 	for (unsigned int m = 0; m < m_AiScene->mNumMeshes; m++)
 	{
 		aiMesh* mesh = m_AiScene->mMeshes[m];
@@ -356,6 +356,18 @@ void AnimationModel::Update(const char *AnimationName, int Frame)
 			matrix[1] = m_Bone[deformVertex->BoneName[1]].Matrix;
 			matrix[2] = m_Bone[deformVertex->BoneName[2]].Matrix;
 			matrix[3] = m_Bone[deformVertex->BoneName[3]].Matrix;
+
+			ANIMATE a;
+			a.inMatrix[0] = reinterpret_cast<D3DMATRIX&>(matrix[0]);
+			a.inMatrix[1] = reinterpret_cast<D3DMATRIX&>(matrix[1]);
+			a.inMatrix[2] = reinterpret_cast<D3DMATRIX&>(matrix[2]);
+			a.inMatrix[3] = reinterpret_cast<D3DMATRIX&>(matrix[3]);
+			a.BoneWeight[0] = deformVertex->BoneWeight[0];
+			a.BoneWeight[1] = deformVertex->BoneWeight[1];
+			a.BoneWeight[2] = deformVertex->BoneWeight[2];
+			a.BoneWeight[3] = deformVertex->BoneWeight[3];
+
+			Renderer::SetAnimate(a);
 
 			//ウェイトを考慮してマトリクス算出
 			//outMatrix = matrix[0] * deformVertex->BoneWeight[0]

@@ -18,6 +18,7 @@ ID3D11Buffer*			Renderer::m_ProjectionBuffer{};
 ID3D11Buffer*			Renderer::m_MaterialBuffer{};
 ID3D11Buffer*			Renderer::m_LightBuffer{};
 ID3D11Buffer*			Renderer::m_CameraBuffer{};
+ID3D11Buffer*			Renderer::m_AnimateBuffer{};
 
 
 ID3D11DepthStencilState* Renderer::m_DepthStateEnable{};
@@ -231,6 +232,11 @@ void Renderer::Init()
 
 
 
+	bufferDesc.ByteWidth = sizeof(ANIMATE);
+
+	m_Device->CreateBuffer(&bufferDesc, NULL, &m_AnimateBuffer);
+	m_DeviceContext->PSSetConstantBuffers(6, 1, &m_AnimateBuffer);
+
 
 	// ƒ‰ƒCƒg‰Šú‰»
 	LIGHT light{};
@@ -364,6 +370,11 @@ void Renderer::SetProjectionMatrix( D3DXMATRIX* ProjectionMatrix )
 void Renderer::SetMaterial( MATERIAL Material )
 {
 	m_DeviceContext->UpdateSubresource( m_MaterialBuffer, 0, NULL, &Material, 0, 0 );
+}
+
+void Renderer::SetAnimate(ANIMATE animate)
+{
+	m_DeviceContext->UpdateSubresource(m_AnimateBuffer, 0, NULL, &animate, 0, 0);
 }
 
 void Renderer::SetLight( LIGHT Light )

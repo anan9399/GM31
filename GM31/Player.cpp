@@ -18,15 +18,15 @@ void Player::Init()
 	m_model->Load("asset\\model\\torus.obj");	*/
 
 	m_model = std::make_unique<AnimationModel>();
-	m_model->Load("asset\\model\\character.fbx");	
+	m_model->Load("asset\\model\\Bot.fbx");	
 	m_model->LoadAnimation("asset\\model\\Bot_Idle.fbx","Idle");
 	m_model->LoadAnimation("asset\\model\\Bot_Run.fbx","Run");
 	m_model->LoadAnimation("asset\\model\\Excited.fbx","Excited");
-
+	animationName = "Run";
 
 	m_Scale = { 0.015f,0.015f,0.015f };
 
-	auto pvs = VertexShader::Resolve("pixelLightingVS.cso");
+	auto pvs = VertexShader::Resolve("AnimationVS.cso");
 	auto fsize = pvs->Getfsize();
 	auto buffer = pvs->GetBuffer();
 	AddBind(std::move(pvs));
@@ -63,8 +63,9 @@ void Player::Update()
 	auto scene = Manager::GetScene();
 	D3DXVECTOR3 oldPos = m_Position;
 
-
+	//animationName = "Idle";
 	if (Keyboard::GetKeyPress('W')) {
+		animationName = "Run";
 		m_Position += GetForward() * m_speed;
 	}
 	if (Keyboard::GetKeyPress('S')) {
@@ -211,7 +212,7 @@ void Player::Draw()
 
 	BindAll();
 
-	m_model->Update("Excited", m_time);
+	m_model->Update(animationName.c_str(), m_time);
 	m_time++;
 
 	m_model->Draw();

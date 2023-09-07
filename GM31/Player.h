@@ -3,6 +3,7 @@
 #include<memory>
 #include<vector>
 #include"animationModel.h"
+#include<string>
 
 #include"Bullet.h"
 class Scene;
@@ -26,7 +27,7 @@ protected:
 	class Shadow* m_shaow;
 	D3DMATRIX m_matrix;
 
-
+	std::string animationName;
 	int m_time= 0;
 
 private:

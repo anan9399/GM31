@@ -70,6 +70,9 @@
     <Filter Include="ヘッダー ファイル\BehaviorTree\Action">
       <UniqueIdentifier>{d14f2a0d-9fc3-4fc9-aec1-89ef90c6306d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\common">
+      <UniqueIdentifier>{caffb72e-0387-41da-9895-b4f198d4ba0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -400,9 +403,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="common.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
     <FxCompile Include="unlitTexturePS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
@@ -429,6 +429,12 @@
     </FxCompile>
     <FxCompile Include="pixelLightingVS.hlsl">
       <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="AnimationVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="common.hlsl">
+      <Filter>Shader\common</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
