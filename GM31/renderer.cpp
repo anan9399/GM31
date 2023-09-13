@@ -235,7 +235,7 @@ void Renderer::Init()
 	bufferDesc.ByteWidth = sizeof(ANIMATE);
 
 	m_Device->CreateBuffer(&bufferDesc, NULL, &m_AnimateBuffer);
-	m_DeviceContext->PSSetConstantBuffers(6, 1, &m_AnimateBuffer);
+	m_DeviceContext->VSSetConstantBuffers(6, 1, &m_AnimateBuffer);
 
 
 	// ƒ‰ƒCƒg‰Šú‰»

@@ -27,20 +27,20 @@ void Camera::Update()
 	Player* player = Manager::GetScene()->GetGameObj<Player>();
 
 	
-	//m_Target = player->GetPos();
-	//m_Position = m_Target + D3DXVECTOR3(0.0f, 5.0f, -10.0f);
+	m_Target = player->GetPos();
+	m_Position = m_Target + D3DXVECTOR3(0.0f, 5.0f, -10.0f);
 	
-	if (player != nullptr) {
-		m_Target = player->GetPos()
-			+ player->GetRight() * 0.5f
-			+ D3DXVECTOR3(0.0f, 1.5f, 0.0f);
-		m_Position = m_Target
-			- player->GetForward() * 6.0f
-			+ D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	}
+	//if (player != nullptr) {
+	//	m_Target = player->GetPos()
+	//		+ player->GetForward() * 0.5f
+	//		+ D3DXVECTOR3(0.0f, 1.5f, 0.0f);
+	//	m_Position = m_Target
+	//		- player->GetForward() * 6.0f
+	//		+ D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	//}
 	
-	//m_Position = player->GetPos() + D3DXVECTOR3(0.0f, 1.0f, -0.5f);
-	//m_Target = m_Position + player->GetForward();
+	/*m_Position = player->GetPos() + D3DXVECTOR3(0.0f, 1.0f, -0.5f);
+	m_Target = m_Position + player->GetForward();*/
 
 }
 

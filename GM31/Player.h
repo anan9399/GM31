@@ -27,8 +27,10 @@ protected:
 	class Shadow* m_shaow;
 	D3DMATRIX m_matrix;
 
-	std::string animationName;
+	std::string m_animationName;
+	std::string m_nextAnimationName;
 	int m_time= 0;
+	float m_blendRate = 0.0f;
 
 private:
 
@@ -43,6 +45,7 @@ public:
 	void Hurt()override;
 	void SetExplosion();
 
+	void SetAnimation(std::string animationName);
 	D3DMATRIX GetMatrix() { return m_matrix; }
 
 

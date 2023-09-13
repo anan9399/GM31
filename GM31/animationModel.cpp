@@ -177,7 +177,6 @@ void AnimationModel::Load( const char *FileName )
 		for (unsigned int b = 0; b < mesh->mNumBones; b++)
 		{
 			aiBone* bone = mesh->mBones[b];
-
 			m_Bone[bone->mName.C_Str()].OffsetMatrix = bone->mOffsetMatrix;
 
 			//変形後頂点にボーンデータ格納
@@ -281,48 +280,81 @@ void AnimationModel::Unload()
 
 
 
-void AnimationModel::Update(const char *AnimationName, int Frame)
+void AnimationModel::Update(const char* AnimationName1, int Frame1,
+	const char* AnimationName2, int Frame2, float BlendRate)
 {
-	if (m_Animation.count(AnimationName) == 0)
+	if (m_Animation.count(AnimationName1) == 0 
+			|| m_Animation.count(AnimationName2) == 0)
 		return;
 
-	if (!m_Animation[AnimationName]->HasAnimations())
+	if (!m_Animation[AnimationName1]->HasAnimations() 
+			|| !m_Animation[AnimationName2]->HasAnimations())
 		return;
 
 
 
 	//アニメーションデータからボーンマトリクス算出
-	aiAnimation* animation = m_Animation[AnimationName]->mAnimations[0];
+	aiAnimation* animation1 = m_Animation[AnimationName1]->mAnimations[0];
+	aiAnimation* animation2 = m_Animation[AnimationName2]->mAnimations[0];
 
 	for (auto pair : m_Bone)
 	{
 		BONE* bone = &m_Bone[pair.first];
 
 
-		aiNodeAnim* nodeAnim = nullptr;
+		aiNodeAnim* nodeAnim1 = nullptr;
 			
-		for (unsigned int c = 0; c < animation->mNumChannels; c++)
+		for (unsigned int c = 0; c < animation1->mNumChannels; c++)
 		{
-			if (animation->mChannels[c]->mNodeName == aiString(pair.first))
+			if (animation1->mChannels[c]->mNodeName == aiString(pair.first))
 			{
-				nodeAnim = animation->mChannels[c];
+				nodeAnim1 = animation1->mChannels[c];
 				break;
 			}
 		}
 
+		aiNodeAnim* nodeAnim2 = nullptr;
 
-		aiQuaternion rot;
-		aiVector3D pos;
-		int f;
-
-		if (nodeAnim)
+		for (unsigned int c = 0; c < animation2->mNumChannels; c++)
 		{
-			f = Frame % nodeAnim->mNumRotationKeys;//簡易実装
-			rot = nodeAnim->mRotationKeys[f].mValue;
-
-			f = Frame % nodeAnim->mNumPositionKeys;//簡易実装
-			pos = nodeAnim->mPositionKeys[f].mValue;
+			if (animation2->mChannels[c]->mNodeName == aiString(pair.first))
+			{
+				nodeAnim2 = animation2->mChannels[c];
+				break;
+			}
 		}
+
+		aiQuaternion rot1;
+		aiVector3D pos1;
+		int f1;
+
+		if (nodeAnim1)
+		{
+			f1 = Frame1 % nodeAnim1->mNumRotationKeys;//簡易実装
+			rot1 = nodeAnim1->mRotationKeys[f1].mValue;
+
+			f1 = Frame1 % nodeAnim1->mNumPositionKeys;//簡易実装
+			pos1 = nodeAnim1->mPositionKeys[f1].mValue;
+		}
+
+		aiQuaternion rot2;
+		aiVector3D pos2;
+		int f2;
+
+		if (nodeAnim2)
+		{
+			f2 = Frame2 % nodeAnim2->mNumRotationKeys;//簡易実装
+			rot2 = nodeAnim2->mRotationKeys[f2].mValue;
+
+			f2 = Frame2 % nodeAnim2->mNumPositionKeys;//簡易実装
+			pos2 = nodeAnim2->mPositionKeys[f2].mValue;
+		}
+		//球面線形補間
+		aiQuaternion rot ;
+		aiQuaternion::Interpolate(rot,rot1,rot2, BlendRate);
+		//線形補間
+		aiVector3D pos = pos2 * BlendRate + pos1 * (1.0f - BlendRate);
+
 
 		bone->AnimationMatrix = aiMatrix4x4(aiVector3D(1.0f, 1.0f, 1.0f), rot, pos);
 	}
@@ -331,6 +363,8 @@ void AnimationModel::Update(const char *AnimationName, int Frame)
 
 
 	//再帰的にボーンマトリクスを更新
+	// *m_Boneを丸ごとVSに渡す？
+	//http://asura.iaigiri.com/DirectX/dx4.html
 	aiMatrix4x4 rootMatrix = aiMatrix4x4(aiVector3D(1.0f, 1.0f, 1.0f), aiQuaternion((float)AI_MATH_PI, 0.0f, 0.0f), aiVector3D(0.0f, 0.0f, 0.0f));
 	UpdateBoneMatrix(m_AiScene->mRootNode, rootMatrix);
 

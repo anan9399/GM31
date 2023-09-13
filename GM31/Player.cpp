@@ -21,8 +21,15 @@ void Player::Init()
 	m_model->Load("asset\\model\\Bot.fbx");	
 	m_model->LoadAnimation("asset\\model\\Bot_Idle.fbx","Idle");
 	m_model->LoadAnimation("asset\\model\\Bot_Run.fbx","Run");
+	m_model->LoadAnimation("asset\\model\\Basic Locomotion Pack\\left strafe walking.fbx","LeftRun");
+	m_model->LoadAnimation("asset\\model\\Basic Locomotion Pack\\right strafe walking.fbx","RightRun");
+	//m_model->LoadAnimation("asset\\model\\Locomotion Pack\\running.fbx","Run");
+
+
 	m_model->LoadAnimation("asset\\model\\Excited.fbx","Excited");
-	animationName = "Run";
+
+	m_animationName = "Idle";
+	m_nextAnimationName = "Idle";
 
 	m_Scale = { 0.015f,0.015f,0.015f };
 
@@ -63,20 +70,36 @@ void Player::Update()
 	auto scene = Manager::GetScene();
 	D3DXVECTOR3 oldPos = m_Position;
 
-	//animationName = "Idle";
+	bool move = false;
 	if (Keyboard::GetKeyPress('W')) {
-		animationName = "Run";
+		SetAnimation("Run");
+
 		m_Position += GetForward() * m_speed;
+		move = true;
 	}
+
 	if (Keyboard::GetKeyPress('S')) {
+		
 		m_Position -= GetForward() * m_speed;
 	}
 	if (Keyboard::GetKeyPress('A')) {
+		SetAnimation("LeftRun");
 		m_Position -= GetRight() * m_speed;
 	}
 	if (Keyboard::GetKeyPress('D')) {
+		SetAnimation("RightRun");
+	/*	if (m_Rotation.y <= PI /2.0f) {
+			m_Rotation.y += m_speed;
+		}*/
 		m_Position += GetRight() * m_speed;
-	}	
+		move = true;
+	}
+
+
+	if (move  == false) {
+		SetAnimation("Idle");
+	}
+
 
 	if (Keyboard::GetKeyPress('E')) {
 		m_Rotation.y += m_speed;
@@ -212,8 +235,14 @@ void Player::Draw()
 
 	BindAll();
 
-	m_model->Update(animationName.c_str(), m_time);
+	m_model->Update(m_animationName.c_str(), m_time,
+					m_nextAnimationName.c_str(), m_time, m_blendRate);
 	m_time++;
+
+	m_blendRate += 0.05f;
+	if (m_blendRate > 1.0f) {
+		m_blendRate = 1.0f;
+	}
 
 	m_model->Draw();
 	GameObject::Draw();
@@ -228,4 +257,13 @@ void Player::SetExplosion()
 {
 	auto explosion = Manager::GetScene()->AddGameObj<Explosion>(1);
 	explosion->SetPos(m_Position);
+}
+
+void Player::SetAnimation(std::string animationName)
+{
+	if (m_nextAnimationName != animationName) {
+		m_animationName = m_nextAnimationName;
+		m_nextAnimationName = animationName;
+		m_blendRate = 0.0f;
+	}
 }
