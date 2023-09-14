@@ -21,8 +21,8 @@ void Player::Init()
 	m_model->Load("asset\\model\\Bot.fbx");	
 	m_model->LoadAnimation("asset\\model\\Bot_Idle.fbx","Idle");
 	m_model->LoadAnimation("asset\\model\\Bot_Run.fbx","Run");
-	m_model->LoadAnimation("asset\\model\\Basic Locomotion Pack\\left strafe walking.fbx","LeftRun");
-	m_model->LoadAnimation("asset\\model\\Basic Locomotion Pack\\right strafe walking.fbx","RightRun");
+	//m_model->LoadAnimation("asset\\model\\Basic Locomotion Pack\\left strafe walking.fbx","LeftRun");
+	//m_model->LoadAnimation("asset\\model\\Basic Locomotion Pack\\right strafe walking.fbx","RightRun");
 	//m_model->LoadAnimation("asset\\model\\Locomotion Pack\\running.fbx","Run");
 
 
@@ -33,7 +33,7 @@ void Player::Init()
 
 	m_Scale = { 0.015f,0.015f,0.015f };
 
-	auto pvs = VertexShader::Resolve("AnimationVS.cso");
+	auto pvs = VertexShader::Resolve("pixelLightingVS.cso");
 	auto fsize = pvs->Getfsize();
 	auto buffer = pvs->GetBuffer();
 	AddBind(std::move(pvs));
@@ -70,64 +70,23 @@ void Player::Update()
 	auto scene = Manager::GetScene();
 	D3DXVECTOR3 oldPos = m_Position;
 
-	bool move = false;
-	if (Keyboard::GetKeyPress('W')) {
-		SetAnimation("Run");
 
-		m_Position += GetForward() * m_speed;
-		move = true;
-	}
-
-	if (Keyboard::GetKeyPress('S')) {
-		
-		m_Position -= GetForward() * m_speed;
-	}
-	if (Keyboard::GetKeyPress('A')) {
-		SetAnimation("LeftRun");
-		m_Position -= GetRight() * m_speed;
-	}
-	if (Keyboard::GetKeyPress('D')) {
-		SetAnimation("RightRun");
-	/*	if (m_Rotation.y <= PI /2.0f) {
-			m_Rotation.y += m_speed;
-		}*/
-		m_Position += GetRight() * m_speed;
-		move = true;
+	switch (m_state)
+	{
+	case PLAYER_STATE_GROUND:
+		UpdateGround();
+		break;
+	case PLAYER_STATE_JUMP:
+		UpdateJump();
+		break;
+	default:
+		break;
 	}
 
 
-	if (move  == false) {
-		SetAnimation("Idle");
-	}
 
 
-	if (Keyboard::GetKeyPress('E')) {
-		m_Rotation.y += m_speed;
-	}	
-	if (Keyboard::GetKeyPress('Q')) {
-		m_Rotation.y -= m_speed;
-	}
 
-	//std::shared_ptr<Scene> scene = Manager::GetScene();
-	if (Keyboard::GetKeyTrigger('F')) {	
-		if (superBullet) {
-			auto bullet = scene->AddGameObj<SuperBullet>(1);
-			bullet->SetPos(m_Position);
-			bullet->SetVelocity(GetForward() * 0.1f);
-		}
-		else {
-			auto bullet = scene->AddGameObj<Bullet>(1);
-			bullet->SetPos(m_Position);
-			bullet->SetVelocity(GetForward() * 0.1f);
-		}
-		
-		m_shotSE->Play(false);
-	}
-
-	if (isGround && Keyboard::GetKeyTrigger(VK_SPACE)) {
-		m_velocity.y = 0.3f;
-		isGround = false;
-	}
 
 
 	m_velocity.y -= 0.01f;
@@ -211,7 +170,9 @@ void Player::Update()
 		m_Position.y = groundHeight;
 		m_velocity.y = 0.0f;
 		isGround = true;
+	//	m_state = PLAYER_STATE_GROUND;
 	}
+
 	D3DXVECTOR3 shadowPos = { m_Position.x,groundHeight+0.001f,m_Position.z };
 	m_shaow->SetPos(shadowPos);
 
@@ -257,6 +218,81 @@ void Player::SetExplosion()
 {
 	auto explosion = Manager::GetScene()->AddGameObj<Explosion>(1);
 	explosion->SetPos(m_Position);
+}
+
+void Player::UpdateGround()
+{
+	auto scene = Manager::GetScene();
+	D3DXVECTOR3 oldPos = m_Position;
+
+	bool move = false;
+	if (Keyboard::GetKeyPress('W')) {
+		SetAnimation("Run");
+
+		m_Position += GetForward() * m_speed;
+		move = true;
+	}
+
+	if (Keyboard::GetKeyPress('S')) {
+
+		m_Position -= GetForward() * m_speed;
+	}
+	if (Keyboard::GetKeyPress('A')) {
+		SetAnimation("LeftRun");
+		m_Position -= GetRight() * m_speed;
+	}
+	if (Keyboard::GetKeyPress('D')) {
+		SetAnimation("RightRun");
+		/*	if (m_Rotation.y <= PI /2.0f) {
+				m_Rotation.y += m_speed;
+			}*/
+		m_Position += GetRight() * m_speed;
+		move = true;
+	}
+
+	if (isGround && Keyboard::GetKeyTrigger(VK_SPACE)) {
+		m_velocity.y = 0.3f;
+		isGround = false;
+		m_state = PLAYER_STATE_JUMP;
+	}
+
+	if (move == false) {
+		SetAnimation("Idle");
+	}
+
+
+	if (Keyboard::GetKeyPress('E')) {
+		m_Rotation.y += m_speed;
+	}
+	if (Keyboard::GetKeyPress('Q')) {
+		m_Rotation.y -= m_speed;
+	}
+
+	//std::shared_ptr<Scene> scene = Manager::GetScene();
+	if (Keyboard::GetKeyTrigger('F')) {
+		if (superBullet) {
+			auto bullet = scene->AddGameObj<SuperBullet>(1);
+			bullet->SetPos(m_Position);
+			bullet->SetVelocity(GetForward() * 0.1f);
+		}
+		else {
+			auto bullet = scene->AddGameObj<Bullet>(1);
+			bullet->SetPos(m_Position);
+			bullet->SetVelocity(GetForward() * 0.1f);
+		}
+
+		m_shotSE->Play(false);
+
+
+
+	}
+}
+
+void Player::UpdateJump()
+{
+	if (isGround) {
+		m_state = PLAYER_STATE_GROUND;
+	}
 }
 
 void Player::SetAnimation(std::string animationName)

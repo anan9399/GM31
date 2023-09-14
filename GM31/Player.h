@@ -9,6 +9,14 @@
 class Scene;
 class Audio;
 
+
+
+enum PLAYER_STATE {
+	PLAYER_STATE_GROUND,
+	PLAYER_STATE_JUMP,
+
+};
+
 class Player : public GameObject
 {
 protected:
@@ -31,6 +39,7 @@ protected:
 	std::string m_nextAnimationName;
 	int m_time= 0;
 	float m_blendRate = 0.0f;
+	PLAYER_STATE m_state = PLAYER_STATE_GROUND;
 
 private:
 
@@ -45,6 +54,8 @@ public:
 	void Hurt()override;
 	void SetExplosion();
 
+	void UpdateGround();
+	void UpdateJump();
 	void SetAnimation(std::string animationName);
 	D3DMATRIX GetMatrix() { return m_matrix; }
 

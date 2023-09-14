@@ -2,6 +2,7 @@
 #include<wrl.h>
 #include<string>
 #include<memory>
+
 class Bindable
 {
 public:

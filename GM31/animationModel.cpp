@@ -84,7 +84,7 @@ void AnimationModel::Load( const char *FileName )
 	m_DeformVertex = new std::vector<DEFORM_VERTEX>[m_AiScene->mNumMeshes];
 
 	//再帰的にボーン生成
-	CreateBone(m_AiScene->mRootNode);
+	CreateBone(m_AiScene->mRootNode,-1);
 
 
 
@@ -177,15 +177,34 @@ void AnimationModel::Load( const char *FileName )
 		for (unsigned int b = 0; b < mesh->mNumBones; b++)
 		{
 			aiBone* bone = mesh->mBones[b];
-			m_Bone[bone->mName.C_Str()].OffsetMatrix = bone->mOffsetMatrix;
+			int boneIndex = 0;
+			std::string boneName(bone->mName.C_Str());
+
+			
+			m_Bone[boneName].OffsetMatrix = bone->mOffsetMatrix;
+
+
+			if (m_BoneMapping.find(boneName) == m_BoneMapping.end()) {
+				//insert error program
+			}
+			else {
+				boneIndex = m_BoneMapping[boneName];
+			}
+
+			if (!m_Bones[boneIndex].isSkinned)
+			{
+				m_Bones[boneIndex].OffsetMatrix = bone->mOffsetMatrix;
+				m_Bones[boneIndex].isSkinned = true;
+			}
+
 
 			//変形後頂点にボーンデータ格納
 			for (unsigned int w = 0; w < bone->mNumWeights; w++)
 			{
 				aiVertexWeight weight = bone->mWeights[w];
-
+				
 				int num = m_DeformVertex[m][weight.mVertexId].BoneNum;
-
+				
 				m_DeformVertex[m][weight.mVertexId].BoneWeight[num] = weight.mWeight;
 				m_DeformVertex[m][weight.mVertexId].BoneName[num] = bone->mName.C_Str();
 				m_DeformVertex[m][weight.mVertexId].BoneNum++;
@@ -231,16 +250,26 @@ void AnimationModel::LoadAnimation( const char *FileName, const char *Name )
 }
 
 
-void AnimationModel::CreateBone(aiNode* node)
+void AnimationModel::CreateBone(aiNode* node,int parentIndex)
 {
 	BONE bone;
 
 	m_Bone[node->mName.C_Str()] = bone;
 
+	int index = this->m_Bones.size();
+	m_BoneMapping[node->mName.C_Str()] = index;
+
+	BONE_TEST boneTest;
+	//boneTest.parentIndex = parentIndex;
+	m_Bones.push_back(boneTest);
+
 	for (unsigned int n = 0; n < node->mNumChildren; n++)
 	{
-		CreateBone(node->mChildren[n]);
+		CreateBone(node->mChildren[n], index);
 	}
+
+
+
 
 }
 
@@ -299,8 +328,8 @@ void AnimationModel::Update(const char* AnimationName1, int Frame1,
 
 	for (auto pair : m_Bone)
 	{
+		//BONE_TEST* bone = &m_Bones[m_BoneMapping[pair.first]];
 		BONE* bone = &m_Bone[pair.first];
-
 
 		aiNodeAnim* nodeAnim1 = nullptr;
 			
@@ -386,12 +415,17 @@ void AnimationModel::Update(const char* AnimationName1, int Frame1,
 
 			aiMatrix4x4 matrix[4];
 			aiMatrix4x4 outMatrix;
+			/*matrix[0] = m_Bones[m_BoneMapping[deformVertex->BoneName[0]]].Matrix;
+			matrix[1] = m_Bones[m_BoneMapping[deformVertex->BoneName[1]]].Matrix;
+			matrix[2] = m_Bones[m_BoneMapping[deformVertex->BoneName[2]]].Matrix;
+			matrix[3] = m_Bones[m_BoneMapping[deformVertex->BoneName[3]]].Matrix;*/
+			
 			matrix[0] = m_Bone[deformVertex->BoneName[0]].Matrix;
 			matrix[1] = m_Bone[deformVertex->BoneName[1]].Matrix;
 			matrix[2] = m_Bone[deformVertex->BoneName[2]].Matrix;
 			matrix[3] = m_Bone[deformVertex->BoneName[3]].Matrix;
 
-			ANIMATE a;
+	/*		ANIMATE a;
 			a.inMatrix[0] = reinterpret_cast<D3DMATRIX&>(matrix[0]);
 			a.inMatrix[1] = reinterpret_cast<D3DMATRIX&>(matrix[1]);
 			a.inMatrix[2] = reinterpret_cast<D3DMATRIX&>(matrix[2]);
@@ -401,7 +435,7 @@ void AnimationModel::Update(const char* AnimationName1, int Frame1,
 			a.BoneWeight[2] = deformVertex->BoneWeight[2];
 			a.BoneWeight[3] = deformVertex->BoneWeight[3];
 
-			Renderer::SetAnimate(a);
+			Renderer::SetAnimate(a);*/
 
 			//ウェイトを考慮してマトリクス算出
 			//outMatrix = matrix[0] * deformVertex->BoneWeight[0]
@@ -533,6 +567,7 @@ void AnimationModel::UpdateBoneMatrix(aiNode* node, aiMatrix4x4 matrix)
 {
 	BONE* bone = &m_Bone[node->mName.C_Str()];
 
+	BONE_TEST* testBone = &m_Bones[m_BoneMapping[node->mName.C_Str()]];
 	//マトリクスの乗算順番に注意
 	aiMatrix4x4 worldMatrix;
 
