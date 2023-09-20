@@ -182,6 +182,7 @@
     <ClInclude Include="LoadingLog.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
+    <ClInclude Include="meshField.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="MyTimer.h" />
     <ClInclude Include="Node.h" />
@@ -237,6 +238,7 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
+    <ClCompile Include="meshField.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="MyTimer.cpp" />
     <ClCompile Include="Over.cpp" />

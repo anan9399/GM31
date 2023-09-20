@@ -18,7 +18,7 @@ void Player::Init()
 	m_model->Load("asset\\model\\torus.obj");	*/
 
 	m_model = std::make_unique<AnimationModel>();
-	m_model->Load("asset\\model\\Bot.fbx");	
+	m_model->Load("asset\\model\\character.fbx");	
 	m_model->LoadAnimation("asset\\model\\Bot_Idle.fbx","Idle");
 	m_model->LoadAnimation("asset\\model\\Bot_Run.fbx","Run");
 	//m_model->LoadAnimation("asset\\model\\Basic Locomotion Pack\\left strafe walking.fbx","LeftRun");
@@ -33,12 +33,12 @@ void Player::Init()
 
 	m_Scale = { 0.015f,0.015f,0.015f };
 
-	auto pvs = VertexShader::Resolve("pixelLightingVS.cso");
+	auto pvs = VertexShader::Resolve("unlitTextureVS.cso");
 	auto fsize = pvs->Getfsize();
 	auto buffer = pvs->GetBuffer();
 	AddBind(std::move(pvs));
 	AddBind(std::make_shared<InputLayout>(layout, "layout", buffer, fsize));
-	AddBind(PixelShader::Resolve("pixelLightingPS.cso"));
+	AddBind(PixelShader::Resolve("unlitTexturePS.cso"));
 
 	m_Position = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
