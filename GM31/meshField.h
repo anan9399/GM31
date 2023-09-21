@@ -21,6 +21,6 @@ public:
 	void Uninit() override;
 	void Update() override;
 	void Draw() override;
-
+	float GetHeight(D3DXVECTOR3 position);
 
 };

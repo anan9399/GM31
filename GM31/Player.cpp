@@ -10,7 +10,7 @@
 #include"BindableBase.h"
 #include"Shadow.h"
 #include"Explosion.h"
-
+#include"meshField.h"
 
 void Player::Init()
 {
@@ -92,7 +92,8 @@ void Player::Update()
 	m_velocity.y -= 0.01f;
 	m_Position += m_velocity;
 
-	float groundHeight = 1.0f;
+	
+	float groundHeight = scene->GetGameObj<MeshField>()->GetHeight(m_Position);
 	
 	// Cyliner
 	auto cylinerColiders = scene->GetGameObjs<Cylinder>();
