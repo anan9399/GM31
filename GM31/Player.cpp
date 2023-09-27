@@ -11,11 +11,13 @@
 #include"Shadow.h"
 #include"Explosion.h"
 #include"meshField.h"
-
+#include"PlayerControlFSM.h"
 void Player::Init()
 {
 	/*m_model = std::make_unique<Model>();
 	m_model->Load("asset\\model\\torus.obj");	*/
+
+	fsm = new PlayerControlFSM(this);
 
 	m_model = std::make_unique<AnimationModel>();
 	m_model->Load("asset\\model\\character.fbx");	
@@ -42,8 +44,7 @@ void Player::Init()
 
 	m_Position = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
-	m_speed = 0.1f;
-	//material.Diffuse = { 0.6f,0.6f,0.8f,1.0f };
+	m_speed = 0.05f;
 	m_shotSE = AddComponent<Audio>();
 	m_shotSE->Load("asset\\audio\\solid.wav");
 	m_shaow = AddComponent<Shadow>();
@@ -66,33 +67,45 @@ void Player::Update()
 		SetDestory();
 		return;
 	}
+	fsm->Update();
+
 
 	auto scene = Manager::GetScene();
 	D3DXVECTOR3 oldPos = m_Position;
 
 
-	switch (m_state)
-	{
-	case PLAYER_STATE_GROUND:
-		UpdateGround();
-		break;
-	case PLAYER_STATE_JUMP:
-		UpdateJump();
-		break;
-	default:
-		break;
+	m_velocity.y -= 0.01f;
+	m_Position.y += m_velocity.y;
+	m_Position += GetForward() * m_velocity.z;
+	m_Position += GetRight() * m_velocity.x;
+	
+
+	if (Keyboard::GetKeyPress('E')) {
+		m_Rotation.y += m_speed;
+	}
+	if (Keyboard::GetKeyPress('Q')) {
+		m_Rotation.y -= m_speed;
+	}
+
+	if (Keyboard::GetKeyTrigger('F')) {
+		if (superBullet) {
+			auto bullet = scene->AddGameObj<SuperBullet>(1);
+			bullet->SetPos(m_Position);
+			bullet->SetVelocity(GetForward() * 0.1f);
+		}
+		else {
+			auto bullet = scene->AddGameObj<Bullet>(1);
+			bullet->SetPos(m_Position);
+			bullet->SetVelocity(GetForward() * 0.1f);
+		}
+
+		m_shotSE->Play(false);
 	}
 
 
 
 
 
-
-
-	m_velocity.y -= 0.01f;
-	m_Position += m_velocity;
-
-	
 	float groundHeight = scene->GetGameObj<MeshField>()->GetHeight(m_Position);
 	
 	// Cyliner
@@ -221,80 +234,7 @@ void Player::SetExplosion()
 	explosion->SetPos(m_Position);
 }
 
-void Player::UpdateGround()
-{
-	auto scene = Manager::GetScene();
-	D3DXVECTOR3 oldPos = m_Position;
 
-	bool move = false;
-	if (Keyboard::GetKeyPress('W')) {
-		SetAnimation("Run");
-
-		m_Position += GetForward() * m_speed;
-		move = true;
-	}
-
-	if (Keyboard::GetKeyPress('S')) {
-
-		m_Position -= GetForward() * m_speed;
-	}
-	if (Keyboard::GetKeyPress('A')) {
-		SetAnimation("LeftRun");
-		m_Position -= GetRight() * m_speed;
-	}
-	if (Keyboard::GetKeyPress('D')) {
-		SetAnimation("RightRun");
-		/*	if (m_Rotation.y <= PI /2.0f) {
-				m_Rotation.y += m_speed;
-			}*/
-		m_Position += GetRight() * m_speed;
-		move = true;
-	}
-
-	if (isGround && Keyboard::GetKeyTrigger(VK_SPACE)) {
-		m_velocity.y = 0.3f;
-		isGround = false;
-		m_state = PLAYER_STATE_JUMP;
-	}
-
-	if (move == false) {
-		SetAnimation("Idle");
-	}
-
-
-	if (Keyboard::GetKeyPress('E')) {
-		m_Rotation.y += m_speed;
-	}
-	if (Keyboard::GetKeyPress('Q')) {
-		m_Rotation.y -= m_speed;
-	}
-
-	//std::shared_ptr<Scene> scene = Manager::GetScene();
-	if (Keyboard::GetKeyTrigger('F')) {
-		if (superBullet) {
-			auto bullet = scene->AddGameObj<SuperBullet>(1);
-			bullet->SetPos(m_Position);
-			bullet->SetVelocity(GetForward() * 0.1f);
-		}
-		else {
-			auto bullet = scene->AddGameObj<Bullet>(1);
-			bullet->SetPos(m_Position);
-			bullet->SetVelocity(GetForward() * 0.1f);
-		}
-
-		m_shotSE->Play(false);
-
-
-
-	}
-}
-
-void Player::UpdateJump()
-{
-	if (isGround) {
-		m_state = PLAYER_STATE_GROUND;
-	}
-}
 
 void Player::SetAnimation(std::string animationName)
 {

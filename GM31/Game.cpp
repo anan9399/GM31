@@ -28,7 +28,7 @@
 #include"Failure.h"
 #include"Child.h"
 #include"meshField.h"
-
+#include"ModelTree.h"
 std::mt19937 rng({ std::random_device{}() });
 std::uniform_int_distribution<int> xdist(-40.0f, 40.0f);
 std::uniform_int_distribution<int> ydist(0.0f, 2.0f);
@@ -67,11 +67,12 @@ void Game::Init()
 	cylinder->SetScale({ 2.0f,2.0f,2.0f });
 	cylinder->SetPos({ -13.0f,3.0f,4.0f });
 
-	//for (int i = 0; i < 20; i++) {
-	//	box = AddGameObj<Box>(1);
-	//	box->SetScale({ 2.0f,1.0f,2.0f });
-	//	box->SetPos({ xdist(rng) + 1.0f,0.5f,zdist(rng)+1.0f });
-	//}
+	for (int i = 0; i < 50; i++) {
+		auto modelTree = AddGameObj<ModelTree>(1);
+		D3DXVECTOR3 pos = { xdist(rng) + 1.0f,0.0f,zdist(rng) + 1.0f };
+		pos.y = GetGameObj<MeshField>()->GetHeight(pos);
+		modelTree->SetPos(pos);
+	}
 	auto player = AddGameObj<Player>(1);
 	//AddGameObj<Child>(1)->SetParent(player);
 

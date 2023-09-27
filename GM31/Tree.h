@@ -20,4 +20,7 @@ namespace BehaviorTree
     protected:
         virtual Node* SetupTree() noexcept { return nullptr; };
     };
+
+
+
 }

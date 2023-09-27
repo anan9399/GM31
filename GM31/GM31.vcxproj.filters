@@ -73,6 +73,12 @@
     <Filter Include="Shader\common">
       <UniqueIdentifier>{caffb72e-0387-41da-9895-b4f198d4ba0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\StateMachine">
+      <UniqueIdentifier>{76d976da-3c4e-4b7e-a62d-59814c79e805}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\StateMachine">
+      <UniqueIdentifier>{f667a693-89f9-46f5-b01c-a1e9846779c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -261,6 +267,18 @@
     <ClInclude Include="meshField.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="IState.h">
+      <Filter>ヘッダー ファイル\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleState.h">
+      <Filter>ヘッダー ファイル\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerControlFSM.h">
+      <Filter>ヘッダー ファイル\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelTree.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -270,9 +288,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="renderer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="MyTimer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
@@ -405,6 +420,18 @@
       <Filter>ソース ファイル\BehaviorTree</Filter>
     </ClCompile>
     <ClCompile Include="meshField.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerControlFSM.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleState.cpp">
+      <Filter>ソース ファイル\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="MyTimer.cpp">
+      <Filter>ソース ファイル\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelTree.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

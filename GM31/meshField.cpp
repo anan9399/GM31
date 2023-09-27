@@ -126,7 +126,7 @@ void MeshField::Init()
 
 	// テクスチャ読み込み
 	D3DX11CreateShaderResourceViewFromFile(Renderer::GetDevice(),
-											"asset/texture/brick_wall_diffuse.jpg",
+											"asset/texture/soil03.jpg",
 											NULL,
 											NULL,
 											&m_Texture,
