@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "MyTimer.h"
+
 
 class Score : public GameObject
 {
@@ -20,13 +20,11 @@ public:
 		
 		m_count += count;
 	}
-	int* GetCount() {
-		
-		return &m_count;
+	int GetCount() {
+		return m_count;
 	}
 private:
 	//bool m_dirty = true;
-	int m_count =0;
-	MyTimer m_timer{};
+	static int m_count;
 };
 

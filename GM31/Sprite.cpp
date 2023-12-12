@@ -10,17 +10,17 @@ void Sprite::Init(const char* TextureName,D3DXVECTOR3 pos,float height, float wi
 	vertex[0].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[0].TexCoord = D3DXVECTOR2(0.0f, 0.0f);
 
-	vertex[1].Position = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+	vertex[1].Position = D3DXVECTOR3(width, 0.0f, 0.0f);
 	vertex[1].Normal = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	vertex[1].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[1].TexCoord = D3DXVECTOR2(1.0f, 0.0f);
 
-	vertex[2].Position = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	vertex[2].Position = D3DXVECTOR3(0.0f, height, 0.0f);
 	vertex[2].Normal = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	vertex[2].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[2].TexCoord = D3DXVECTOR2(0.0f, 1.0f);
 
-	vertex[3].Position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);
+	vertex[3].Position = D3DXVECTOR3(width, height, 0.0f);
 	vertex[3].Normal = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	vertex[3].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[3].TexCoord = D3DXVECTOR2(1.0f, 1.0f);
@@ -68,13 +68,13 @@ void Sprite::Update()
 
 void Sprite::Draw()
 {
-	D3DXMATRIX scale,trans,world;
-	D3DXMatrixScaling(&scale, m_scale.x, m_scale.y, m_scale.z);
-	D3DXMatrixTranslation(&trans, m_pos.x,m_pos.y,m_pos.z);
-	
-	world = scale * trans;
+	//D3DXMATRIX scale,trans,world;
+	//D3DXMatrixScaling(&scale, m_scale.x, m_scale.y, m_scale.z);
+	//D3DXMatrixTranslation(&trans, m_pos.x,m_pos.y,m_pos.z);
+	//
+	//world = scale * trans;
 
-	Renderer::SetWorldMatrix(&world);
+	//Renderer::SetWorldMatrix(&world);
 	
 	// 頂点バッファ設定
 	UINT stride = sizeof(VERTEX_3D);

@@ -52,6 +52,33 @@
     <Filter Include="ソース ファイル\Scene\Log">
       <UniqueIdentifier>{4a3bcfa6-eddd-4888-85ab-efa1dfd651ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\BehaviorTree">
+      <UniqueIdentifier>{8ca67835-30db-49d3-9c77-b97ac906c9f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\BehaviorTree">
+      <UniqueIdentifier>{8820be9c-5964-4c2e-9ead-307a5bf08e2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\BehaviorTree\Base">
+      <UniqueIdentifier>{57ffb349-9a3d-4e73-a9e7-d955a826ea13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\BehaviorTree\Base">
+      <UniqueIdentifier>{27846f45-b4bc-435a-94d1-5112e2e1e8a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\BehaviorTree\Condition">
+      <UniqueIdentifier>{af12bace-addb-464f-b014-4ffb08ab4646}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\BehaviorTree\Action">
+      <UniqueIdentifier>{d14f2a0d-9fc3-4fc9-aec1-89ef90c6306d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\common">
+      <UniqueIdentifier>{caffb72e-0387-41da-9895-b4f198d4ba0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\StateMachine">
+      <UniqueIdentifier>{76d976da-3c4e-4b7e-a62d-59814c79e805}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\StateMachine">
+      <UniqueIdentifier>{f667a693-89f9-46f5-b01c-a1e9846779c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -174,6 +201,87 @@
     <ClInclude Include="TitleLog.h">
       <Filter>ヘッダー ファイル\Scene\Log</Filter>
     </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>ヘッダー ファイル\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>ヘッダー ファイル\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="Shadow.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GuardBT.h">
+      <Filter>ヘッダー ファイル\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>ヘッダー ファイル\BehaviorTree\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Selector.h">
+      <Filter>ヘッダー ファイル\BehaviorTree\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Sequence.h">
+      <Filter>ヘッダー ファイル\BehaviorTree\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>ヘッダー ファイル\BehaviorTree\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckEnermyInAttackRange.h">
+      <Filter>ヘッダー ファイル\BehaviorTree\Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckEnermyInFOVRange.h">
+      <Filter>ヘッダー ファイル\BehaviorTree\Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskAttack.h">
+      <Filter>ヘッダー ファイル\BehaviorTree\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskGoToTarget.h">
+      <Filter>ヘッダー ファイル\BehaviorTree\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskPatrol.h">
+      <Filter>ヘッダー ファイル\BehaviorTree\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskRunAwayFromTarget.h">
+      <Filter>ヘッダー ファイル\BehaviorTree\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="GuardRunBT.h">
+      <Filter>ヘッダー ファイル\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyCoward.h">
+      <Filter>ヘッダー ファイル\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeCounter.h">
+      <Filter>ヘッダー ファイル\GameObject\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="FailureLog.h">
+      <Filter>ヘッダー ファイル\Scene\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="Failure.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Child.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="animationModel.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="meshField.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="IState.h">
+      <Filter>ヘッダー ファイル\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleState.h">
+      <Filter>ヘッダー ファイル\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerControlFSM.h">
+      <Filter>ヘッダー ファイル\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelTree.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadScene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -183,9 +291,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="renderer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="MyTimer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
@@ -275,11 +380,68 @@
     <ClCompile Include="TitleLog.cpp">
       <Filter>ソース ファイル\Scene\Log</Filter>
     </ClCompile>
+    <ClCompile Include="VertexBuffer.cpp">
+      <Filter>ソース ファイル\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexBuffer.cpp">
+      <Filter>ソース ファイル\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="Shadow.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GuardBT.cpp">
+      <Filter>ソース ファイル\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="Selector.cpp">
+      <Filter>ソース ファイル\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>ソース ファイル\BehaviorTree\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="GuardRunBT.cpp">
+      <Filter>ソース ファイル\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyCoward.cpp">
+      <Filter>ソース ファイル\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeCounter.cpp">
+      <Filter>ソース ファイル\GameObject\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Failure.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Child.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="animationModel.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="TaskPatrol.cpp">
+      <Filter>ソース ファイル\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckEnermyInFOVRange.cpp">
+      <Filter>ソース ファイル\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="meshField.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleState.cpp">
+      <Filter>ソース ファイル\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="MyTimer.cpp">
+      <Filter>ソース ファイル\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelTree.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerControlFSM.cpp">
+      <Filter>ソース ファイル\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="common.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
     <FxCompile Include="unlitTexturePS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
@@ -300,6 +462,18 @@
     </FxCompile>
     <FxCompile Include="SolidColorPS.hlsl">
       <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="pixelLightingPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="pixelLightingVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="AnimationVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="common.hlsl">
+      <Filter>Shader\common</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

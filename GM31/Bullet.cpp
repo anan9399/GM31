@@ -8,12 +8,22 @@
 #include"Box.h"
 #include"Score.h"
 #include"BindableBase.h"
+#include"EnemyCoward.h"
+std::unique_ptr<Model> Bullet::m_model;
+
+void Bullet::Load()
+{
+	m_model = std::make_unique<Model>();
+	m_model->Load("asset\\model\\sphere.obj");
+}
+
+void Bullet::UnLoad()
+{
+	m_model->Unload();
+}
+
 void Bullet::Init()
 {
-
-	m_Model = std::make_unique<Model>();
-	m_Model->Load("asset\\model\\sphere.obj");
-
 	m_Scale = D3DXVECTOR3(0.3f, 0.3f, 0.3f);
 	m_velocity = D3DXVECTOR3(0.0f, 0.0f, 0.1f);
 
@@ -30,7 +40,7 @@ void Bullet::Init()
 
 void Bullet::Uninit()
 {
-	m_Model->Unload();
+	
 }
 
 void Bullet::Update()
@@ -48,7 +58,21 @@ void Bullet::Update()
 	for (auto& e : enemys) {
 		D3DXVECTOR3 enemyPos = e->GetPos();
 		D3DXVECTOR3 direction = m_Position - enemyPos;
-		if (D3DXVec3Length(&direction)<1.0f) {
+		if (D3DXVec3Length(&direction)<1.8f) {
+			SetExplosion();
+			SetDestory();
+			e->SetDestory();
+			Manager::GetScene()->GetGameObj<Score>()->AddCount(5);
+			return;
+		}
+	}
+
+
+	auto enemysCoward = Manager::GetScene()->GetGameObjs<EnemyCoward>();
+	for (auto& e : enemysCoward) {
+		D3DXVECTOR3 enemyPos = e->GetPos();
+		D3DXVECTOR3 direction = m_Position - enemyPos;
+		if (D3DXVec3Length(&direction) <1.8f) {
 			SetExplosion();
 			SetDestory();
 			e->SetDestory();
@@ -113,7 +137,7 @@ void Bullet::Draw()
 
 	BindAll();
 
-	m_Model->Draw();
+	m_model->Draw();
 
 }
 

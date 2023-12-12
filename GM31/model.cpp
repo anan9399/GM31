@@ -7,19 +7,24 @@
 #include "main.h"
 #include "renderer.h"
 #include "model.h"
-
-
+#include"VertexBuffer.h"
+#include"IndexBuffer.h"
 
 void Model::Draw()
 {
 
-	// 頂点バッファ設定
-	UINT stride = sizeof(VERTEX_3D);
-	UINT offset = 0;
-	Renderer::GetDeviceContext()->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);
+	for (auto& b : m_binds)
+	{
+		b->Bind();
+	}
 
-	// インデックスバッファ設定
-	Renderer::GetDeviceContext()->IASetIndexBuffer(m_IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+	//// 頂点バッファ設定
+	//UINT stride = sizeof(VERTEX_3D);
+	//UINT offset = 0;
+	//Renderer::GetDeviceContext()->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);
+
+	//// インデックスバッファ設定
+	//Renderer::GetDeviceContext()->IASetIndexBuffer(m_IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
 	// プリミティブトポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -52,24 +57,25 @@ void Model::Load( const char *FileName )
 
 	// 頂点バッファ生成
 	{
-		D3D11_BUFFER_DESC bd;
-		ZeroMemory( &bd, sizeof(bd) );
-		bd.Usage = D3D11_USAGE_DEFAULT;
-		bd.ByteWidth = sizeof( VERTEX_3D ) * model.VertexNum;
-		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		bd.CPUAccessFlags = 0;
+		//D3D11_BUFFER_DESC bd;
+		//ZeroMemory( &bd, sizeof(bd) );
+		//bd.Usage = D3D11_USAGE_DEFAULT;
+		//bd.ByteWidth = sizeof( VERTEX_3D ) * model.VertexNum;
+		//bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		//bd.CPUAccessFlags = 0;
 
-		D3D11_SUBRESOURCE_DATA sd;
-		ZeroMemory( &sd, sizeof(sd) );
-		sd.pSysMem = model.VertexArray;
+		//D3D11_SUBRESOURCE_DATA sd;
+		//ZeroMemory( &sd, sizeof(sd) );
+		//sd.pSysMem = model.VertexArray;
 
-		Renderer::GetDevice()->CreateBuffer( &bd, &sd, &m_VertexBuffer );
+		//Renderer::GetDevice()->CreateBuffer( &bd, &sd, &m_VertexBuffer );
+		m_binds.emplace_back(VertexBuffer::Resolve(FileName, model));
 	}
 
 
 	// インデックスバッファ生成
 	{
-		D3D11_BUFFER_DESC bd;
+		/*D3D11_BUFFER_DESC bd;
 		ZeroMemory( &bd, sizeof(bd) );
 		bd.Usage = D3D11_USAGE_DEFAULT;
 		bd.ByteWidth = sizeof( unsigned int ) * model.IndexNum;
@@ -80,7 +86,9 @@ void Model::Load( const char *FileName )
 		ZeroMemory( &sd, sizeof(sd) );
 		sd.pSysMem = model.IndexArray;
 
-		Renderer::GetDevice()->CreateBuffer( &bd, &sd, &m_IndexBuffer );
+		Renderer::GetDevice()->CreateBuffer( &bd, &sd, &m_IndexBuffer );*/
+
+		m_binds.emplace_back(IndexBuffer::Resolve(FileName,model));
 	}
 
 	// サブセット設定
@@ -123,8 +131,8 @@ void Model::Load( const char *FileName )
 
 void Model::Unload()
 {
-	m_VertexBuffer->Release();
-	m_IndexBuffer->Release();
+	//m_VertexBuffer->Release();
+	//m_IndexBuffer->Release();
 
 	for (unsigned int i = 0; i < m_SubsetNum; i++)
 	{

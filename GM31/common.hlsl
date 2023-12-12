@@ -50,6 +50,10 @@ cbuffer LightBuffer : register(b4)
 	LIGHT Light;
 }
 
+cbuffer CameraBuffer : register(b5)
+{
+    float4 CameraPosition;
+}
 
 
 

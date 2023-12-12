@@ -17,6 +17,8 @@ ID3D11Buffer*			Renderer::m_ViewBuffer{};
 ID3D11Buffer*			Renderer::m_ProjectionBuffer{};
 ID3D11Buffer*			Renderer::m_MaterialBuffer{};
 ID3D11Buffer*			Renderer::m_LightBuffer{};
+ID3D11Buffer*			Renderer::m_CameraBuffer{};
+ID3D11Buffer*			Renderer::m_AnimateBuffer{};
 
 
 ID3D11DepthStencilState* Renderer::m_DepthStateEnable{};
@@ -223,8 +225,17 @@ void Renderer::Init()
 	m_DeviceContext->VSSetConstantBuffers( 4, 1, &m_LightBuffer );
 	m_DeviceContext->PSSetConstantBuffers( 4, 1, &m_LightBuffer );
 
+	bufferDesc.ByteWidth = sizeof(D3DXVECTOR4);
+
+	m_Device->CreateBuffer(&bufferDesc, NULL, &m_CameraBuffer);
+	m_DeviceContext->PSSetConstantBuffers(5, 1, &m_CameraBuffer);
 
 
+
+	bufferDesc.ByteWidth = sizeof(ANIMATE);
+
+	m_Device->CreateBuffer(&bufferDesc, NULL, &m_AnimateBuffer);
+	m_DeviceContext->VSSetConstantBuffers(6, 1, &m_AnimateBuffer);
 
 
 	// ƒ‰ƒCƒg‰Šú‰»
@@ -361,12 +372,21 @@ void Renderer::SetMaterial( MATERIAL Material )
 	m_DeviceContext->UpdateSubresource( m_MaterialBuffer, 0, NULL, &Material, 0, 0 );
 }
 
+void Renderer::SetAnimate(ANIMATE animate)
+{
+	m_DeviceContext->UpdateSubresource(m_AnimateBuffer, 0, NULL, &animate, 0, 0);
+}
+
 void Renderer::SetLight( LIGHT Light )
 {
 	m_DeviceContext->UpdateSubresource(m_LightBuffer, 0, NULL, &Light, 0, 0);
 }
 
-
+void Renderer::SetCameraPosition(D3DXVECTOR3 CameraPosition)
+{
+	D3DXVECTOR4 cpos(CameraPosition.x, CameraPosition.y, CameraPosition.z, 1.0f);
+	m_DeviceContext->UpdateSubresource(m_CameraBuffer, 0, NULL, &cpos, 0, 0);
+}
 
 
 

@@ -10,11 +10,27 @@
 #include"Bullet.h"
 #include"Player.h"
 #include"BindableBase.h"
+
+
+std::unique_ptr<Model> SuperBullet::m_model;
+
+
+void SuperBullet::Load()
+{
+	m_model = std::make_unique<Model>();
+	m_model->Load("asset\\model\\sphere.obj");
+}
+
+void SuperBullet::UnLoad()
+{
+	m_model->Unload();
+}
+
 void SuperBullet::Init()
 {
 
-	m_Model = std::make_unique<Model>();
-	m_Model->Load("asset\\model\\sphere.obj");
+	m_model = std::make_unique<Model>();
+	m_model->Load("asset\\model\\sphere.obj");
 
 	m_Scale = D3DXVECTOR3(0.3f, 0.3f, 0.3f);
 	m_velocity = D3DXVECTOR3(0.0f, 0.0f, 0.1f);
@@ -35,7 +51,7 @@ void SuperBullet::Init()
 
 void SuperBullet::Uninit()
 {
-	m_Model->Unload();
+	//m_model->Unload();
 }
 
 void SuperBullet::Update()
@@ -139,7 +155,7 @@ void SuperBullet::Draw()
 	//Renderer::GetDeviceContext()->PSSetShader(m_pPixelShader.Get(), nullptr, 0u);
 	BindAll();
 
-	m_Model->Draw();
+	m_model->Draw();
 
 }
 

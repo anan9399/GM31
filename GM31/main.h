@@ -1,6 +1,7 @@
 #pragma once
 
 #define _CRT_SECURE_NO_WARNINGS
+#define NOMINMAX
 #include <stdio.h>
 #include <windows.h>
 #include <assert.h>
@@ -27,6 +28,7 @@
 #define SCREEN_WIDTH	(1280)
 #define SCREEN_HEIGHT	(720)
 
+#define PI 3.1415926
 
 HWND GetWindow();
 

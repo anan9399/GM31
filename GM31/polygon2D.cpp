@@ -41,6 +41,7 @@ void polygon2D::Draw()
 	// マトリクス設定
 	Renderer::SetWorldViewProjection2D();
 
+
 	//ここにシェーダー関連の描画準備を追加
 	for (auto b : m_binds) {
 		b->Bind();

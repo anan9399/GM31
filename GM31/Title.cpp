@@ -6,7 +6,7 @@
 #include"TitleLog.h"
 #include"Fade.h"
 #include"LoadingLog.h"
-
+#include"LoadScene.h"
 void Title::Init()
 {
 	m_se = AddGameObj<TitleLog>(2)->AddComponent<Audio>();
@@ -26,8 +26,8 @@ void Title::Update()
 		fade->FadeOut();
 	}
 	if (fade->GetFadeFinished()) {
-		AddGameObj<LoadingLog>(2);
-		Draw();
-		Manager::SetScene<Game>();
+		//AddGameObj<LoadingLog>(2);
+		//Draw();
+		Manager::SetScene<LoadScene>();
 	}
 }

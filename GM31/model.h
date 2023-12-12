@@ -1,6 +1,6 @@
 #pragma once
 #include "renderer.h"
-
+#include"Bindable.h"
 
 // マテリアル構造体
 struct MODEL_MATERIAL
@@ -48,6 +48,9 @@ private:
 
 	SUBSET*	m_SubsetArray;
 	unsigned int	m_SubsetNum;
+
+
+	std::vector<std::shared_ptr<Bindable>> m_binds;
 
 	void LoadObj( const char *FileName, MODEL *Model );
 	void LoadMaterial( const char *FileName, MODEL_MATERIAL **MaterialArray, unsigned int *MaterialNum );
